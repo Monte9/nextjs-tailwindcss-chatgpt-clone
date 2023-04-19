@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  height: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+#__next {
+  height: 100vh;
+}
+
+body {
+  height: 100%;
+}
+
+.react-scroll-to-bottom--css-uzqrz-79elbk {
+  position: relative;
+}
+
+.react-scroll-to-bottom--css-ikyem-1n7m0yu {
+  height: 100%;
+  overflow-y: auto;
+  width: 100%;
+}
+
+textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
