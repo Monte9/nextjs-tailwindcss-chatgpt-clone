@@ -8,7 +8,7 @@ ChatGPT Clone is a fully functional clone of ChatGPT, an AI-powered chatbot, bui
 
 🎥 **Watch the Demo Video**
 
-[![Demo Video](https://img.youtube.com/vi/your-video-id/maxresdefault.jpg)](https://www.youtube.com/watch?v=your-video-id)
+[![Demo Video](./demo-screenshot.png)](https://www.loom.com/share/ff91d8df35b7479a8da6ad41da05c4c8)
 
 ## Technology Choices
 
