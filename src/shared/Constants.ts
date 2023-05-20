@@ -11,7 +11,7 @@ export const DEFAULT_OPENAI_MODEL = {
 export const GPT4_OPENAI_MODEL = {
   name: "GPT-4",
   id: "gpt-4",
-  available: false,
+  available: true,
 };
 
 export const OPENAI_MODELS: OpenAIModel[] = [

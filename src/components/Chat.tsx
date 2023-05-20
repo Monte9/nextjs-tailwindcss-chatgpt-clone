@@ -196,7 +196,7 @@ const Chat = (props: any) => {
                     overflowY: "hidden",
                   }}
                   // rows={1}
-                  placeholder="Send a message..."
+                  placeholder="Ask me about Shreyas Parab..."
                   className="m-0 w-full resize-none border-0 bg-transparent p-0 pr-7 focus:ring-0 focus-visible:ring-0 dark:bg-transparent pl-2 md:pl-0"
                   onChange={(e) => setMessage(e.target.value)}
                   onKeyDown={handleKeypress}
