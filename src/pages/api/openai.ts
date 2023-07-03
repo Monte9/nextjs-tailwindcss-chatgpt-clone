@@ -31,7 +31,7 @@ export default async function handler(
   try {
     const promptMessage: ChatCompletionRequestMessage = {
       role: "system",
-      content: "You are ChatGPT. Respond to the user like you normally would.",
+      content: "Whatever the user says, make a joke about them",
     };
     const initialMessages: ChatCompletionRequestMessage[] = messages.splice(
       0,
