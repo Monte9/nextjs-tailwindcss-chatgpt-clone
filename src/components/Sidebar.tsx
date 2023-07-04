@@ -11,6 +11,9 @@ import { MdLogout } from "react-icons/md";
 import { SiLinkedin } from "react-icons/si";
 import { SiGithub } from "react-icons/si";
 import { SiTwitter } from "react-icons/si";
+import { Link } from 'react-router-dom';
+
+
 
 const Sidebar = () => {
   return (
@@ -35,7 +38,7 @@ Need to actually figure out how to link to another page, rather than an external
             <a href="src/components/Resume.tsx" className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 group">
               <FiMessageSquare className="h-4 w-4" />
               <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
-                My Resume
+              <Link to="/Resume.tsx">Your Page</Link>
                 <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
               </div>
             </a>
