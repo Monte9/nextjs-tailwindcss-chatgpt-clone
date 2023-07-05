@@ -23,15 +23,15 @@ export default async function handler(
     res.status(405).json({ error: "Method not allowed" });
     return;
   }
-
   const body = req.body;
   const messages = (body?.messages || []) as ChatCompletionRequestMessage[];
   const model = (body?.model || DEFAULT_OPENAI_MODEL) as OpenAIModel;
+  const systemPrompt = (body?.systemPrompt || "Default prompt message") as string;
 
   try {
     const promptMessage: ChatCompletionRequestMessage = {
       role: "system",
-      content: "Whatever the user says, make a joke about them",
+      content: systemPrompt,
     };
     const initialMessages: ChatCompletionRequestMessage[] = messages.splice(
       0,

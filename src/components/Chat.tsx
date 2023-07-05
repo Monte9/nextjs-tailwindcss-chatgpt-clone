@@ -11,14 +11,16 @@ const Chat = (props: any) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [showEmptyChat, setShowEmptyChat] = useState(true);
-  const [conversation, setConversation] = useState<any[]>([]);
+  const [showEmptyChat, setShowEmptyChat] = useState(false);
   const [message, setMessage] = useState("");
   const textAreaRef = useAutoResizeTextArea();
   const bottomOfChatRef = useRef<HTMLDivElement>(null);
 
   const selectedModel = DEFAULT_OPENAI_MODEL;
+  const [conversation, setConversation] = useState<any[]>([
+    { content: props.StartMessage, role: "system" },
 
+  ]);
   useEffect(() => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = "24px";
@@ -63,6 +65,7 @@ const Chat = (props: any) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          systemPrompt: props.SystemPrompt,
           messages: [...conversation, { content: message, role: "user" }],
           model: selectedModel,
         }),
@@ -210,8 +213,7 @@ const Chat = (props: any) => {
           </form>
           <div className="px-3 pt-2 pb-3 text-center text-xs text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
             <span>
-              ChatGPT Clone may produce inaccurate information about people,
-              places, or facts.
+              
             </span>
           </div>
         </div>

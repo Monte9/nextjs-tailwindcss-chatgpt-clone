@@ -11,7 +11,8 @@ import { MdLogout } from "react-icons/md";
 import { SiLinkedin } from "react-icons/si";
 import { SiGithub } from "react-icons/si";
 import { SiTwitter } from "react-icons/si";
-import { Link } from 'react-router-dom';
+import { SiMedium } from "react-icons/si";
+import Link from 'next/link'
 
 
 
@@ -28,35 +29,40 @@ const Sidebar = () => {
             <a className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 group">
               <FiMessageSquare className="h-4 w-4" />
               <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
-                Getting to know Shreyas
+                Biographical
                 <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
               </div>
             </a>
 {/* 
 Need to actually figure out how to link to another page, rather than an external site
 */}
-            <a href="src/components/Resume.tsx" className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 group">
-              <FiMessageSquare className="h-4 w-4" />
-              <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
-              <Link to="/Resume.tsx">Your Page</Link>
-                <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
-              </div>
-            </a>
+
+            <Link href='/hello' legacyBehavior>
             <a className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 group">
               <FiMessageSquare className="h-4 w-4" />
               <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
-                My Writings/Talks
+                Writings/Talks
                 <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
               </div>
             </a>
+            </Link>
 
             <a className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 group">
               <FiMessageSquare className="h-4 w-4" />
               <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
-                My Past Projects
+                Past Projects
                 <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
               </div>
             </a>
+
+            <a href="src/components/Resume.tsx" className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 group">
+              <FiMessageSquare className="h-4 w-4" />
+              <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
+                <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
+                Fun Facts
+              </div>
+            </a>
+
           </div>
         </div>
         <a href="https://twitter.com/sparab22" target = "_blank" className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm">
@@ -72,16 +78,15 @@ Need to actually figure out how to link to another page, rather than an external
           Twitter
         </a>
         <a
-          href="https://help.openai.com/en/collections/3742473-chatgpt"
+          href="https://medium.com/@sparab18"
           target="_blank"
           className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm"
         >
-          <BiLinkExternal className="h-4 w-4" />
-          Get help
+          <SiMedium className="h-4 w-4" />
+          Blog
         </a>
         <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm">
           <MdLogout className="h-4 w-4" />
-          Log out
         </a>
       </nav>
     </div>
@@ -89,3 +94,8 @@ Need to actually figure out how to link to another page, rather than an external
 };
 
 export default Sidebar;
+
+const onCloseFunction = () => {
+  console.log("484-716-2817")
+};
+
