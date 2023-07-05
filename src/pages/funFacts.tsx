@@ -13,7 +13,7 @@ export default function Home() {
   const toggleComponentVisibility = () => {
     setIsComponentVisible(!isComponentVisible);
   };
-  const starterMessage = "Welcome to ShreyasGPT! Personal websites are boring, so I made this. Go to different chats to learn about different parts of my life and ask questions."
+  const starterMessage = "This is the miscellaneous category. I've just provided a bunch of random facts about myself that I think are interesting. Feel free to ask questions about them."
   const systemMessage = "Respond with a haiku"
 
   return (
