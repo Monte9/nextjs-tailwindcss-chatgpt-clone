@@ -13,7 +13,7 @@ export default function Home() {
   const toggleComponentVisibility = () => {
     setIsComponentVisible(!isComponentVisible);
   };
-  const starterMessage = "This is the miscellaneous category. I've just provided a bunch of random facts about myself that I think are interesting. Feel free to ask questions about them."
+  const starterMessage = "The site is still under construction. Doing some wicked prompt engineering. Check back soon."
   const systemMessage = "Respond with a haiku"
 
   return (

@@ -12,8 +12,8 @@ export default function Home() {
   const toggleComponentVisibility = () => {
     setIsComponentVisible(!isComponentVisible);
   };
-  const starterMessage = "Shreyas has been writing for a hot minute now...most of it's not great, but some of it's okay. Shreyas has given 5 TEDx talks...and nobody including his mother has watched all of them. Ask me questions about some of the things he's written or spoken about"
-  const systemMessage = ""
+  const starterMessage = "The site is still under construction. Doing some wicked prompt engineering. Check back soon"
+  const systemMessage = "Respond with a joke and also tell them to check the website soon because it's still under construction."
 
   return (
     <main className="overflow-hidden w-full h-screen relative flex">

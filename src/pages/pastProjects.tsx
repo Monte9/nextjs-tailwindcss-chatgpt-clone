@@ -13,8 +13,8 @@ export default function Home() {
   const toggleComponentVisibility = () => {
     setIsComponentVisible(!isComponentVisible);
   };
-  const starterMessage = "Shreyas has been up to some cool stuff. Ask me questions about some of the past projects and what he's been up to."
-  const systemMessage = "Respond with a haiku"
+  const starterMessage = "The site is still under construction. Doing some wicked prompt engineering. Check back soon"
+  const systemMessage = "Respond with a haiku about checking the website soon after it is finished"
 
   return (
     <main className="overflow-hidden w-full h-screen relative flex">

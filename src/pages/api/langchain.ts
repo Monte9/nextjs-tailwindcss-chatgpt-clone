@@ -1,5 +1,6 @@
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { VectorStoreIndex } from "langchain/indexes";
+import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { RetrievalQAChain } from "langchain/chains";
 import { DEFAULT_OPENAI_MODEL } from "@/shared/Constants";
 import { OpenAIModel } from "@/types/Model";
