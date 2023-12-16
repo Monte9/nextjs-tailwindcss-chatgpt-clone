@@ -51,8 +51,8 @@ const Chat = (props: any) => {
     // Add the message to the conversation
     setConversation([
       ...conversation,
-      { content: message, role: "user" },
-      { content: null, role: "system" },
+      { parts: message, role: "user" },
+      { parts: null, role: "system" },
     ]);
 
     // Clear the message & remove empty chat
@@ -60,13 +60,14 @@ const Chat = (props: any) => {
     setShowEmptyChat(false);
 
     try {
-      const response = await fetch(`/api/openai`, {
+      const response = await fetch(`/api/gemini`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          messages: [...conversation, { content: message, role: "user" }],
+          historyMessages: [...conversation],
+          message: { parts: message, role: "user" },
           model: selectedModel,
         }),
       });
@@ -77,8 +78,8 @@ const Chat = (props: any) => {
         // Add the message to the conversation
         setConversation([
           ...conversation,
-          { content: message, role: "user" },
-          { content: data.message, role: "system" },
+          { parts: message, role: "user" },
+          { parts: data.message, role: "model" },
         ]);
       } else {
         console.error(response);

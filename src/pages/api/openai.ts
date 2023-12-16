@@ -9,7 +9,7 @@ dotenv.config();
 
 // OpenAI configuration creation
 const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_GEMINI_API_KEY,
 });
 
 // OpenAI instance creation

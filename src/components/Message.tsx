@@ -4,7 +4,7 @@ import { TbCursorText } from "react-icons/tb";
 
 const Message = (props: any) => {
   const { message } = props;
-  const { role, content: text } = message;
+  const { role, parts: text } = message;
 
   const isUser = role === "user";
 
