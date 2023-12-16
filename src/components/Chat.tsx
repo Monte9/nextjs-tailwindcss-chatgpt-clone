@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { FiSend } from "react-icons/fi";
+import { FiImage, FiSend } from "react-icons/fi";
 import { BsChevronDown, BsPlusLg } from "react-icons/bs";
 import { RxHamburgerMenu } from "react-icons/rx";
 import useAnalytics from "@/hooks/useAnalytics";
@@ -34,6 +34,56 @@ const Chat = (props: any) => {
     }
   }, [conversation]);
 
+  const [base64Images, setBase64Images] = useState<{ image: string, mimeType: string }[]>([]);
+
+  const getImageMimeType = (image: any): string => {
+    const blob = image instanceof Blob ? image : new Blob([image]);
+    const type = blob.type;
+    return type;
+  };
+
+  const convertImageToBase64 = (image: any): Promise<{ image: string, mimeType: string }> => {
+    return new Promise((resolve) => {
+
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        const base64Image = e.target.result.replace(/^data:image\/[a-z]+;base64,/, '');
+        const mimeType = getImageMimeType(image);
+        resolve({
+          image: base64Image,
+          mimeType
+        })
+      };
+
+      reader.readAsDataURL(image);
+    });
+  };
+
+  const [inputImages, setInputImages] = useState<any[]>([]);
+
+  const handleChange = async (e: any) => {
+    if (e.target.files && e.target.files[0]) {
+      const images = [];
+      const inputImages = [];
+      for (const file of e.target.files) {
+        const base64 = await convertImageToBase64(file);
+        images.push(base64);
+        inputImages.push(URL.createObjectURL(file));
+      }
+
+      setBase64Images(images);
+      setInputImages(inputImages);
+    }
+  };
+
+  const fileInputRef = useRef(null);
+
+  const handleFileButtonClick = (e: any) => {
+    e.preventDefault();
+    fileInputRef?.current?.click();
+  };
+
   const sendMessage = async (e: any) => {
     e.preventDefault();
     const apiKey = localStorage.getItem("apiKey");
@@ -57,12 +107,14 @@ const Chat = (props: any) => {
     setConversation([
       ...conversation,
       { parts: message, role: "user" },
+      ...inputImages.map(x => { return { parts: x.toString(), role: "user" } }),
       { parts: null, role: "system" },
     ]);
 
     // Clear the message & remove empty chat
     setMessage("");
     setShowEmptyChat(false);
+    setInputImages([]);
 
     try {
       const response = await fetch(`/api/gemini`, {
@@ -75,6 +127,7 @@ const Chat = (props: any) => {
           message: { parts: message, role: "user" },
           model: selectedModel,
           apiKey: apiKey,
+          images: base64Images
         }),
       });
 
@@ -85,6 +138,7 @@ const Chat = (props: any) => {
         setConversation([
           ...conversation,
           { parts: message, role: "user" },
+          ...inputImages.map(x => { return { parts: x.toString(), role: "user" } }),
           { parts: data.message, role: "model" },
         ]);
       } else {
@@ -99,6 +153,7 @@ const Chat = (props: any) => {
 
       setIsLoading(false);
     }
+    setBase64Images([]);
   };
 
   const handleKeypress = (e: any) => {
@@ -208,12 +263,40 @@ const Chat = (props: any) => {
                   onChange={(e) => setMessage(e.target.value)}
                   onKeyDown={handleKeypress}
                 ></textarea>
+                <div style={{ display: "flex" }}>
+                  {inputImages && inputImages.length > 0 && (
+                    <div style={{ display: "flex" }}>
+                      {inputImages.map((image, index) => (
+                        <img
+                          key={index}
+                          src={image}
+                          style={{ maxWidth: "150px", margin: "5px" }}
+                          alt={`Preview ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <button
                   disabled={isLoading || message?.length === 0}
                   onClick={sendMessage}
                   className="absolute p-1 rounded-md bottom-1.5 md:bottom-2.5 bg-transparent disabled:bg-gray-500 right-1 md:right-2 disabled:opacity-40"
                 >
                   <FiSend className="h-4 w-4 mr-1 text-white " />
+                </button>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  style={{ display: 'none' }}
+                  onChange={handleChange}
+                  accept=".png, .jpg, .jpeg"
+                  multiple
+                />
+                <button
+                  onClick={handleFileButtonClick}
+                  className="absolute p-1 rounded-md bottom-1.5 md:bottom-2.5 bg-transparent disabled:bg-gray-500 right-1 md:right-12 disabled:opacity-40"
+                >
+                  <FiImage className="h-4 w-4 mr-1 text-white " />
                 </button>
               </div>
             </div>

@@ -1,11 +1,19 @@
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import * as dotenv from "dotenv";
 import { NextApiRequest, NextApiResponse } from "next";
-
-import { GoogleGenerativeAI } from "@google/generative-ai";
 // Get your environment variables
 dotenv.config();
 
 // Gemini configuration creation
+
+function fileToGenerativePart(path: string, mimeType: string) {
+  return {
+    inlineData: {
+      data: path,
+      mimeType
+    },
+  };
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -19,14 +27,26 @@ export default async function handler(
   const body = req.body;
 
   try {
-    
-    const historyMessages = body?.historyMessages.filter((x:any) => ["user", "model"].includes(x.role));
+
+    const historyMessages = body?.historyMessages.filter((x: any) => ["user", "model"].includes(x.role));
     const message = body?.message;
     const apiKey = body?.apiKey;
     const apiModel = body?.model;
-    
+    const images = body?.images;
+
+    if (images?.length) {
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+      const imageParts = images.map((x: any) => fileToGenerativePart(x.image, x.mimeType));
+      const result = await model.generateContent([message.parts, ...imageParts]);
+      const response = await result.response;
+      const text = response.text();
+      console.log(text);
+      return res.status(200).json({ message: text });
+    }
+
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: apiModel.id});
+    const model = genAI.getGenerativeModel({ model: apiModel.id });
     const chat = model.startChat({
       history: historyMessages,
     });
