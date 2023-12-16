@@ -173,7 +173,7 @@ const Chat = (props: any) => {
                     </div>
                   </div>
                   <h1 className="text-2xl sm:text-4xl font-semibold text-center text-gray-200 dark:text-gray-600 flex gap-2 items-center justify-center h-screen">
-                    ChatGPT Clone
+                    Gemini
                   </h1>
                 </div>
               ) : null}
@@ -220,7 +220,7 @@ const Chat = (props: any) => {
           </form>
           <div className="px-3 pt-2 pb-3 text-center text-xs text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
             <span>
-              ChatGPT Clone may produce inaccurate information about people,
+              Gemini may produce inaccurate information about people,
               places, or facts.
             </span>
           </div>
