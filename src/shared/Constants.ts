@@ -14,7 +14,14 @@ export const GPT4_OPENAI_MODEL = {
   available: false,
 };
 
+export const GEMINI_PRO_MODEL = {
+  name: "Gemini Pro",
+  id: "gemini-pro",
+  available: true,
+};
+
 export const OPENAI_MODELS: OpenAIModel[] = [
   DEFAULT_OPENAI_MODEL,
   GPT4_OPENAI_MODEL,
+  GEMINI_PRO_MODEL
 ];

@@ -5,7 +5,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import useAnalytics from "@/hooks/useAnalytics";
 import useAutoResizeTextArea from "@/hooks/useAutoResizeTextArea";
 import Message from "./Message";
-import { DEFAULT_OPENAI_MODEL } from "@/shared/Constants";
+import { GEMINI_PRO_MODEL } from "@/shared/Constants";
 
 const Chat = (props: any) => {
   const { toggleComponentVisibility } = props;
@@ -19,7 +19,7 @@ const Chat = (props: any) => {
   const textAreaRef = useAutoResizeTextArea();
   const bottomOfChatRef = useRef<HTMLDivElement>(null);
 
-  const selectedModel = DEFAULT_OPENAI_MODEL;
+  const selectedModel = GEMINI_PRO_MODEL;
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -36,6 +36,11 @@ const Chat = (props: any) => {
 
   const sendMessage = async (e: any) => {
     e.preventDefault();
+    const apiKey = localStorage.getItem("apiKey");
+    if (!apiKey) {
+      setErrorMessage("Please enter API key.");
+      return;
+    }
 
     // Don't send empty messages
     if (message.length < 1) {
@@ -69,6 +74,7 @@ const Chat = (props: any) => {
           historyMessages: [...conversation],
           message: { parts: message, role: "user" },
           model: selectedModel,
+          apiKey: apiKey,
         }),
       });
 

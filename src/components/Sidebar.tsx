@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiOutlineMessage,
   AiOutlinePlus,
@@ -10,6 +10,21 @@ import { FiMessageSquare } from "react-icons/fi";
 import { MdLogout } from "react-icons/md";
 
 const Sidebar = () => {
+  const [apiKey, setApiKey] = useState("");
+  const handleInputChange = (event: any) => {
+    setApiKey(event.target.value);
+    localStorage.setItem("apiKey", event.target.value);
+  };
+
+  useEffect(() => {
+    // Tente recuperar a variável do localStorage
+    const apiKey = localStorage.getItem('apiKey');
+
+    if (apiKey) {
+      setApiKey(apiKey);
+    }
+  }, []);
+
   return (
     <div className="scrollbar-trigger flex h-full w-full flex-1 items-start border-white/20">
       <nav className="flex h-full flex-1 flex-col space-y-1 p-2">
@@ -40,13 +55,15 @@ const Sidebar = () => {
           <AiOutlineSetting className="h-4 w-4" />
           Settings
         </a>
+        <input value={apiKey} type="password" onChange={handleInputChange} placeholder="Gemini API key" className="flex py-3 px-3 items-center gap-3 rounded-md duration-200 text-black cursor-pointer text-sm">
+        </input>
         <a
-          href="https://help.openai.com/en/collections/3742473-chatgpt"
+          href="https://makersuite.google.com/app/apikey"
           target="_blank"
           className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm"
         >
           <BiLinkExternal className="h-4 w-4" />
-          Get help
+          Get an API key
         </a>
         <a className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm">
           <MdLogout className="h-4 w-4" />

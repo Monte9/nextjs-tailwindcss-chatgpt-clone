@@ -6,7 +6,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 dotenv.config();
 
 // Gemini configuration creation
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 export default async function handler(
   req: NextApiRequest,
@@ -20,11 +19,14 @@ export default async function handler(
   const body = req.body;
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro"});
-
-    const historyMessages = body?.historyMessages;
+    
+    const historyMessages = body?.historyMessages.filter((x:any) => ["user", "model"].includes(x.role));
     const message = body?.message;
-
+    const apiKey = body?.apiKey;
+    const apiModel = body?.model;
+    
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({ model: apiModel.id});
     const chat = model.startChat({
       history: historyMessages,
     });
