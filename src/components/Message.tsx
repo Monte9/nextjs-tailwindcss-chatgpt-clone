@@ -1,6 +1,7 @@
 import { SiOpenai } from "react-icons/si";
 import { HiUser } from "react-icons/hi";
 import { TbCursorText } from "react-icons/tb";
+import Image from "next/image";
 
 const Message = (props: any) => {
   const { message } = props;
@@ -43,7 +44,7 @@ const Message = (props: any) => {
                     <TbCursorText className="h-6 w-6 animate-pulse" />
                   ) : (
                     text.startsWith('blob:') ? (
-                      <img
+                      <Image
                         style={{ maxWidth: "150px", margin: "5px" }}
                         src={text}
                         alt="Imagem do Blob"
