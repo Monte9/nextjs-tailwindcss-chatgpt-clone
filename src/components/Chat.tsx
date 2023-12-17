@@ -8,7 +8,8 @@ import { GEMINI_PRO_MODEL, GEMINI_PRO_VISION_MODEL, GEMINI_MODELS } from "@/shar
 import Image from "next/image";
 
 const Chat = (props: any) => {
-  const { toggleComponentVisibility } = props;
+  const { toggleComponentVisibility, I18nDictionary } = props;
+  const i18n: I18nDictionary = I18nDictionary;
 
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -88,20 +89,20 @@ const Chat = (props: any) => {
     e.preventDefault();
     const apiKey = localStorage.getItem("apiKey");
     if (!apiKey) {
-      setErrorMessage("Please enter API key.");
+      setErrorMessage(i18n.PLEASE_ENTER_API_KEY);
       return;
     }
 
     // Don't send empty messages
     if (message.length < 1) {
-      setErrorMessage("Please enter a message.");
+      setErrorMessage(i18n.PLEASE_ENTER_MESSAGE);
       return;
     } else {
       setErrorMessage("");
     }
 
     if (selectedModel.id === GEMINI_PRO_VISION_MODEL.id && !inputImages?.length) {
-      setErrorMessage("Please select at least one image.");
+      setErrorMessage(i18n.PLEASE_SELECT_IMAGE);
       return;
     }
 
@@ -189,7 +190,7 @@ const Chat = (props: any) => {
           <span className="sr-only">Open sidebar</span>
           <RxHamburgerMenu className="h-6 w-6 text-white" />
         </button>
-        <h1 className="flex-1 text-center text-base font-normal">New chat</h1>
+        <h1 className="flex-1 text-center text-base font-normal">{i18n.NEW_CHAT}</h1>
         <button type="button" className="px-3">
           <BsPlusLg className="h-6 w-6" />
         </button>
@@ -229,7 +230,7 @@ const Chat = (props: any) => {
                           id="headlessui-listbox-label-:r1:"
                           data-headlessui-state=""
                         >
-                          Model
+                          {i18n.MODEL}
                         </label>
                         <span className="inline-flex w-full truncate">
                           <span className="flex h-6 items-center gap-1 truncate text-white">
@@ -329,6 +330,7 @@ const Chat = (props: any) => {
                 <button
                   disabled={selectedModel.id === GEMINI_PRO_MODEL.id}
                   onClick={handleFileButtonClick}
+                  title={i18n.ONLY_AVAILABLE}
                   className="absolute p-1 rounded-md bottom-1.5 md:bottom-2.5 bg-transparent disabled:bg-gray-500 right-1 md:right-12 disabled:opacity-40"
                 >
                   <FiImage className="h-4 w-4 mr-1 text-white " />
@@ -338,8 +340,7 @@ const Chat = (props: any) => {
           </form>
           <div className="px-3 pt-2 pb-3 text-center text-xs text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
             <span>
-              Gemini may produce inaccurate information about people,
-              places, or facts.
+              {i18n.GEMINI_INFORMATION}
             </span>
           </div>
         </div>

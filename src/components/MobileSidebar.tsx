@@ -3,7 +3,8 @@ import { IoMdClose } from "react-icons/io";
 import Sidebar from "./Sidebar";
 
 const MobileSiderbar = (props: any) => {
-  const { toggleComponentVisibility } = props;
+  const { toggleComponentVisibility, I18nDictionary } = props;
+  const i18n: I18nDictionary = I18nDictionary;
 
   return (
     <div id="headlessui-portal-root display:hidden">
@@ -35,7 +36,7 @@ const MobileSiderbar = (props: any) => {
                     tabIndex={0}
                     onClick={toggleComponentVisibility}
                   >
-                    <span className="sr-only">Close sidebar</span>
+                    <span className="sr-only">{i18n.CLOSE_SIDEBAR}</span>
                     <IoMdClose className="h-6 w-6 text-white" />
                   </button>
                 </div>
