@@ -78,7 +78,7 @@ const Chat = (props: any) => {
     }
   };
 
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<any>();
 
   const handleFileButtonClick = (e: any) => {
     e.preventDefault();
