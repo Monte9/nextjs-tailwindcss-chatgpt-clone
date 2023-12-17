@@ -6,10 +6,6 @@ Gemini Clone is a fully functional clone of ChatGPT UI, an AI-powered chatbot, b
 
 **Try it now:** https://chatbot-gemini.vercel.app/
 
-<!-- 🎥 **Watch the Demo Video**
-
-[![Demo Video](./demo-screenshot.png)](https://www.loom.com/share/ff91d8df35b7479a8da6ad41da05c4c8) -->
-
 ## Getting Started
 
 To get started with ChatGPT Clone, follow these steps:
