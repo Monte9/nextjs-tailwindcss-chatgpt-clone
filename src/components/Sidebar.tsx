@@ -8,6 +8,7 @@ import {
 import { BiLinkExternal } from "react-icons/bi";
 import { FiMessageSquare } from "react-icons/fi";
 import { MdLogout } from "react-icons/md";
+import { FaGithub } from "react-icons/fa";
 
 const Sidebar = () => {
   const [apiKey, setApiKey] = useState("");
@@ -68,6 +69,14 @@ const Sidebar = () => {
           <MdLogout className="h-4 w-4" />
           Log out
         </a> */}
+                <a
+          href="https://github.com/WillianAgostini/chatbot-gemini"
+          target="_blank"
+          className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm"
+        >
+          <FaGithub className="h-4 w-4" />
+          Fork me on GitHub
+        </a>
       </nav>
     </div>
   );
