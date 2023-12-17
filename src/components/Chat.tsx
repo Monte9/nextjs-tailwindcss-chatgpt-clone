@@ -139,35 +139,6 @@ const Chat = (props: any) => {
         ]);
       })
 
-      // const response = await fetch(`/api/gemini`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     historyMessages: [...conversation],
-      //     message: { parts: message, role: "user" },
-      //     model: selectedModel,
-      //     apiKey: apiKey,
-      //     images: base64Images
-      //   }),
-      // });
-
-      // if (response.ok) {
-      //   const data = await response.json();
-
-      //   // Add the message to the conversation
-      //   setConversation([
-      //     ...conversation,
-      //     { parts: message, role: "user" },
-      //     ...inputImages.map(x => { return { parts: x.toString(), role: "user" } }),
-      //     { parts: data.message, role: "model" },
-      //   ]);
-      // } else {
-      //   console.error(response);
-      //   setErrorMessage(`Status ${response.statusText}. Error ${JSON.stringify(await response.json())}`);
-      // }
-
       setIsLoading(false);
     } catch (error: any) {
       setConversation([
@@ -180,7 +151,7 @@ const Chat = (props: any) => {
       setIsLoading(false);
     }
 
-    if (conversation.length > 8 && !apiKey) {
+    if (conversation.length > 8 && conversation.length % 4 && !apiKey) {
       setConversation([
         ...conversation,
         { parts: tutorialTxt, role: "system" },

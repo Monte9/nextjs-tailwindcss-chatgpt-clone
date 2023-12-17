@@ -20,7 +20,7 @@ export default async function handler(body: any, callback: any) {
 
         if (images?.length) {
             const genAI = new GoogleGenerativeAI(apiKey);
-            const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+            const model = genAI.getGenerativeModel({ model: apiModel.id });
             const imageParts = images.map((x: any) => fileToGenerativePart(x.image, x.mimeType));
             const result = await model.generateContentStream([message.parts, ...imageParts]);
             let text = '';
