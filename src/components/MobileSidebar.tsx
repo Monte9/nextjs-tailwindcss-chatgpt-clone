@@ -3,7 +3,7 @@ import { IoMdClose } from "react-icons/io";
 import Sidebar from "./Sidebar";
 
 const MobileSiderbar = (props: any) => {
-  const { toggleComponentVisibility, I18nDictionary } = props;
+  const { toggleComponentVisibility, I18nDictionary, apiKey, handleApiKey } = props;
   const i18n: I18nDictionary = I18nDictionary;
 
   return (
@@ -40,7 +40,7 @@ const MobileSiderbar = (props: any) => {
                     <IoMdClose className="h-6 w-6 text-white" />
                   </button>
                 </div>
-                <Sidebar I18nDictionary={i18n}/>
+                <Sidebar I18nDictionary={i18n} apiKey={apiKey} handleApiKey={handleApiKey}/>
               </div>
               <div className="w-14 flex-shrink-0"></div>
             </div>

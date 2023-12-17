@@ -178,7 +178,7 @@ const Chat = (props: any) => {
       setIsLoading(false);
     }
 
-    if (conversation.length > 4 && !apiKey) {
+    if (conversation.length > 8 && !apiKey) {
       setConversation([
         ...conversation,
         { parts: tutorialTxt, role: "system" },
