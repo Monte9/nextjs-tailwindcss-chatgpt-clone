@@ -1,10 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import * as dotenv from "dotenv";
 import { NextApiRequest, NextApiResponse } from "next";
-// Get your environment variables
 dotenv.config();
-
-// Gemini configuration creation
 
 function fileToGenerativePart(path: string, mimeType: string) {
   return {

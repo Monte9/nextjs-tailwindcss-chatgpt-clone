@@ -93,7 +93,6 @@ const Chat = (props: any) => {
       return;
     }
 
-    // Don't send empty messages
     if (message.length < 1) {
       setErrorMessage(i18n.PLEASE_ENTER_MESSAGE);
       return;
@@ -116,7 +115,6 @@ const Chat = (props: any) => {
       { parts: null, role: "system" },
     ]);
 
-    // Clear the message & remove empty chat
     setMessage("");
     setShowEmptyChat(false);
     setInputImages([]);

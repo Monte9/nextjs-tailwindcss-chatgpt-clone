@@ -17,7 +17,6 @@ function useLocalStorage<T>(key: string, initialValue: T) {
   });
 
   useEffect(() => {
-    // Check if window is defined to ensure running on the client-side
     if (typeof window !== "undefined") {
       try {
         localStorage.setItem(key, JSON.stringify(storedValue));

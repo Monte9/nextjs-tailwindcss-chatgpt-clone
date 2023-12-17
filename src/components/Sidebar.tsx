@@ -17,7 +17,6 @@ const Sidebar = () => {
   };
 
   useEffect(() => {
-    // Tente recuperar a variável do localStorage
     const apiKey = localStorage.getItem('apiKey');
 
     if (apiKey) {
