@@ -10,20 +10,6 @@ Gemini Clone is a fully functional clone of ChatGPT UI, an AI-powered chatbot, b
 
 [![Demo Video](./demo-screenshot.png)](https://www.loom.com/share/ff91d8df35b7479a8da6ad41da05c4c8) -->
 
-## Technology Choices
-
-ChatGPT Clone utilizes the following technologies:
-
-| Technology       | Version |
-| ---------------- | ------- |
-| Next.js          | 13.3.0  |
-| Tailwind CSS     | 3.3.1   |
-| React            | 18.2.0  |
-| TypeScript       | 5.0.4   |
-| Axios            | 1.3.5   |
-| mixpanel-browser | 2.46.0  |
-| uuid             | 9.0.0   |
-
 ## Getting Started
 
 To get started with ChatGPT Clone, follow these steps:
