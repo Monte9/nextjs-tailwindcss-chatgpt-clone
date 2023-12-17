@@ -4,6 +4,7 @@ import MobileSiderbar from "@/components/MobileSidebar";
 import Sidebar from "@/components/Sidebar";
 import { i18nDictEn } from "../utils/translate/i18n-en";
 import { i18nDictPt } from "../utils/translate/i18n-pt";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function Home() {
   const [isComponentVisible, setIsComponentVisible] = useState(false);
@@ -31,6 +32,7 @@ export default function Home() {
         </div>
       </div>
       <Chat toggleComponentVisibility={toggleComponentVisibility} I18nDictionary={i18n} />
+      <Analytics />
     </main>
   );
 }
