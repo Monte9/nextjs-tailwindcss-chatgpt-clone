@@ -49,8 +49,8 @@ export default async function handler(body: any, callback: any) {
         }
 
         return text;
-    } catch (error) {
+    } catch (error: any) {
         console.error(error);
-        throw new Error("An error occurred during ping to Gemini. Please try again.");
+        throw new Error(`An error occurred during ping to Gemini. Please refresh your browser and try again.\n ${error.message}` );
     }
 }

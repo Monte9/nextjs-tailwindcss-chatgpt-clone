@@ -168,6 +168,8 @@ const Chat = (props: any) => {
 
       setIsLoading(false);
     } catch (error: any) {
+      setConversation([...conversation]);
+
       console.error(error);
       setErrorMessage(error.message);
 
