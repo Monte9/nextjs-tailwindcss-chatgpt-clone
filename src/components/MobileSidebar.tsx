@@ -40,7 +40,7 @@ const MobileSiderbar = (props: any) => {
                     <IoMdClose className="h-6 w-6 text-white" />
                   </button>
                 </div>
-                <Sidebar />
+                <Sidebar I18nDictionary={i18n}/>
               </div>
               <div className="w-14 flex-shrink-0"></div>
             </div>
