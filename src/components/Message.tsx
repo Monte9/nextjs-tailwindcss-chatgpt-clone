@@ -1,7 +1,7 @@
-import { SiOpenai } from "react-icons/si";
+import Image from "next/image";
+import { BsRobot } from "react-icons/bs";
 import { HiUser } from "react-icons/hi";
 import { TbCursorText } from "react-icons/tb";
-import Image from "next/image";
 
 const Message = (props: any) => {
   const { message } = props;
@@ -21,7 +21,7 @@ const Message = (props: any) => {
               {isUser ? (
                 <HiUser className="h-4 w-4 text-white" />
               ) : (
-                <SiOpenai className="h-4 w-4 text-white" />
+                <BsRobot className="h-4 w-4 text-white" />
               )}
             </div>
             <div className="text-xs flex items-center justify-center gap-1 absolute left-0 top-2 -ml-4 -translate-x-full group-hover:visible !invisible">

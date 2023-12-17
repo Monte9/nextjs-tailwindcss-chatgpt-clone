@@ -59,7 +59,7 @@ export default async function handler(
   } catch (error) {
     console.error(error);
     res.status(500).json({
-      error: "An error occurred during ping to OpenAI. Please try again.",
+      error: "An error occurred during ping to Gemini. Please try again.",
     });
   }
 }

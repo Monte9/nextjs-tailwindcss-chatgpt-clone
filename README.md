@@ -22,7 +22,6 @@ ChatGPT Clone utilizes the following technologies:
 | TypeScript       | 5.0.4   |
 | Axios            | 1.3.5   |
 | dotenv           | 16.0.3  |
-| OpenAI           | 3.2.1   |
 | mixpanel-browser | 2.46.0  |
 | uuid             | 9.0.0   |
 

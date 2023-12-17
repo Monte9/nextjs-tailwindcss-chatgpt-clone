@@ -4,7 +4,7 @@ import { BsChevronDown, BsPlusLg } from "react-icons/bs";
 import { RxHamburgerMenu } from "react-icons/rx";
 import useAutoResizeTextArea from "@/hooks/useAutoResizeTextArea";
 import Message from "./Message";
-import { GEMINI_PRO_MODEL, GEMINI_PRO_VISION_MODEL } from "@/shared/Constants";
+import { GEMINI_PRO_MODEL, GEMINI_PRO_VISION_MODEL, GEMINI_MODELS } from "@/shared/Constants";
 import Image from "next/image";
 
 const Chat = (props: any) => {
@@ -18,7 +18,7 @@ const Chat = (props: any) => {
   const textAreaRef = useAutoResizeTextArea();
   const bottomOfChatRef = useRef<HTMLDivElement>(null);
 
-  const [avaliableModels] = useState([GEMINI_PRO_MODEL, GEMINI_PRO_VISION_MODEL]);
+  const [avaliableModels] = useState(GEMINI_MODELS.filter(x => x.available));
   const [selectedModel, setSelectedModel] = useState(GEMINI_PRO_MODEL);
 
   useEffect(() => {
@@ -147,7 +147,7 @@ const Chat = (props: any) => {
         ]);
       } else {
         console.error(response);
-        setErrorMessage(response.statusText);
+        setErrorMessage(`Status ${response.statusText}. Error ${JSON.stringify(await response.json())}`);
       }
 
       setIsLoading(false);

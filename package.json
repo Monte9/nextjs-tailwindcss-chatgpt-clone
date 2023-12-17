@@ -1,6 +1,6 @@
 {
-  "name": "nextjs-tailwindcss-chatgpt-clone",
-  "version": "0.1.0",
+  "name": "gemini-chatbot",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -20,7 +20,6 @@
     "eslint-config-next": "13.3.0",
     "mixpanel-browser": "^2.46.0",
     "next": "13.3.0",
-    "openai": "^3.2.1",
     "postcss": "8.4.22",
     "react": "18.2.0",
     "react-dom": "18.2.0",

@@ -1,4 +1,4 @@
-export type OpenAIModel = {
+export type AIModel = {
   name: string;
   id: string;
   available: boolean;

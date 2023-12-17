@@ -1,4 +1,4 @@
-import { OpenAIModel } from "@/types/Model";
+import { AIModel } from "@/types/Model";
 
 export const LS_UUID = "@ls/uuid";
 
@@ -14,7 +14,7 @@ export const GEMINI_PRO_VISION_MODEL = {
   available: true,
 };
 
-export const OPENAI_MODELS: OpenAIModel[] = [
+export const GEMINI_MODELS: AIModel[] = [
   GEMINI_PRO_MODEL,
   GEMINI_PRO_VISION_MODEL,
 ];
