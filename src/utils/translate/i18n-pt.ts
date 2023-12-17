@@ -17,4 +17,6 @@ export const i18nDictPt: I18nDictionary = {
     PLEASE_SELECT_IMAGE: 'Por favor, selecione pelo menos uma imagem.',
     PLEASE_ENTER_API_KEY: 'Por favor, insira a chave de API.',
     CLOSE_SIDEBAR: "Fechar barra lateral",
+    SEND_NESSAGE: 'Enviar uma mensagem...',
+    GEMINI_API_KEY: 'Chave de API do Gemini',
 }

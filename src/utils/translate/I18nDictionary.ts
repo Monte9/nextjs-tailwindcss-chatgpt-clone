@@ -14,4 +14,6 @@ interface I18nDictionary {
     PLEASE_SELECT_IMAGE: string;
     PLEASE_ENTER_API_KEY: string;
     CLOSE_SIDEBAR: string;
+    SEND_NESSAGE: string;
+    GEMINI_API_KEY: string;
 }

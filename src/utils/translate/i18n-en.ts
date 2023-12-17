@@ -16,5 +16,7 @@ export const i18nDictEn: I18nDictionary = {
     PLEASE_ENTER_MESSAGE: 'Please enter a message.',
     PLEASE_SELECT_IMAGE: 'Please select at least one image.',
     PLEASE_ENTER_API_KEY: 'Please enter API key.',
-    CLOSE_SIDEBAR: "Close sidebar"
+    CLOSE_SIDEBAR: "Close sidebar",
+    SEND_NESSAGE: 'Send a message...',
+    GEMINI_API_KEY: 'Gemini API key',
 }   
