@@ -170,8 +170,10 @@ const Chat = (props: any) => {
 
       setIsLoading(false);
     } catch (error: any) {
-      setConversation([...conversation]);
-
+      setConversation([
+        ...conversation,
+        { parts: tutorialTxt, role: "system" },
+      ]);
       console.error(error);
       setErrorMessage(error.message);
 
