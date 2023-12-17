@@ -4,7 +4,7 @@
 
 Gemini Clone is a fully functional clone of ChatGPT UI, an AI-powered chatbot, built using Next.js and Tailwind CSS. It allows users to have interactive conversations with the chatbot, powered by the Google gemini-pro and gemini-pro-vision language model.
 
-**Try it now:** https://gemini-chatbot-willians-projects-9b480e07.vercel.app
+**Try it now:** https://chatbot-gemini.vercel.app/
 
 <!-- 🎥 **Watch the Demo Video**
 
