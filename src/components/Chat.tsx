@@ -7,11 +7,13 @@ import Message from "./Message";
 import { GEMINI_PRO_MODEL, GEMINI_PRO_VISION_MODEL, GEMINI_MODELS } from "@/shared/Constants";
 import Image from "next/image";
 import gemini from "../services/gemini";
+import { tutorialTxt } from "@/utils/tutorialFirstAccess";
 
 const Chat = (props: any) => {
-  const { toggleComponentVisibility, I18nDictionary } = props;
+  const { toggleComponentVisibility, I18nDictionary, apiKey, handleApiKey } = props;
   const i18n: I18nDictionary = I18nDictionary;
 
+  const defaultApiKey = "AIzaSyBdjNFJDMh3-VY8APOYt2Lc6hh_RA5oyBs";
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showEmptyChat, setShowEmptyChat] = useState(true);
@@ -88,11 +90,12 @@ const Chat = (props: any) => {
 
   const sendMessage = async (e: any) => {
     e.preventDefault();
-    const apiKey = localStorage.getItem("apiKey");
-    if (!apiKey) {
-      setErrorMessage(i18n.PLEASE_ENTER_API_KEY);
-      return;
-    }
+
+    // console.log(apiKey)
+    // if (!apiKey) {
+    //   setErrorMessage(i18n.PLEASE_ENTER_API_KEY);
+    //   return;
+    // }
 
     if (message.length < 1) {
       setErrorMessage(i18n.PLEASE_ENTER_MESSAGE);
@@ -125,10 +128,9 @@ const Chat = (props: any) => {
         historyMessages: [...conversation],
         message: { parts: message, role: "user" },
         model: selectedModel,
-        apiKey: apiKey,
+        apiKey: apiKey || defaultApiKey,
         images: base64Images
       }, (text: string) => {
-        console.log(new Date())
         setConversation([
           ...conversation,
           { parts: message, role: "user" },
@@ -136,6 +138,14 @@ const Chat = (props: any) => {
           { parts: text, role: "model" },
         ]);
       })
+
+      if (conversation.length > 4 && !apiKey) {
+        setConversation([
+          ...conversation,
+          { parts: tutorialTxt, role: "system" },
+        ]);
+      }
+      console.log(conversation, apiKey)
 
       // const response = await fetch(`/api/gemini`, {
       //   method: "POST",
@@ -300,57 +310,57 @@ const Chat = (props: any) => {
               ) : null}
               <div className="flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]">
                 <div className='flex justify-end'>
-                <textarea
-                  ref={textAreaRef}
-                  value={message}
-                  tabIndex={0}
-                  data-id="root"
-                  style={{
-                    height: "24px",
-                    maxHeight: "200px",
-                    overflowY: "hidden",
-                  }}
-                  // rows={1}
-                  placeholder={i18n.SEND_MESSAGE}
-                  className="m-0 w-full resize-none border-0 bg-transparent p-0 pr-7 focus:ring-0 focus-visible:ring-0 dark:bg-transparent pl-2 md:pl-0"
-                  onChange={(e) => setMessage(e.target.value)}
-                  onKeyDown={handleKeypress}
-                ></textarea>
-                <div style={{ display: "flex" }}>
-                  {inputImages && inputImages.length > 0 && (
-                    <div style={{ display: "flex" }}>
-                      {inputImages.map((image, index) => (
-                        <Image
-                          key={index}
-                          src={image}
-                          style={{ maxWidth: "150px", margin: "5px" }}
-                          width="300" height="500"
-                          alt={`Preview ${index + 1}`}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
+                  <textarea
+                    ref={textAreaRef}
+                    value={message}
+                    tabIndex={0}
+                    data-id="root"
+                    style={{
+                      height: "24px",
+                      maxHeight: "200px",
+                      overflowY: "hidden",
+                    }}
+                    // rows={1}
+                    placeholder={i18n.SEND_MESSAGE}
+                    className="m-0 w-full resize-none border-0 bg-transparent p-0 pr-7 focus:ring-0 focus-visible:ring-0 dark:bg-transparent pl-2 md:pl-0"
+                    onChange={(e) => setMessage(e.target.value)}
+                    onKeyDown={handleKeypress}
+                  ></textarea>
+                  <div style={{ display: "flex" }}>
+                    {inputImages && inputImages.length > 0 && (
+                      <div style={{ display: "flex" }}>
+                        {inputImages.map((image, index) => (
+                          <Image
+                            key={index}
+                            src={image}
+                            style={{ maxWidth: "150px", margin: "5px" }}
+                            width="300" height="500"
+                            alt={`Preview ${index + 1}`}
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
                   <button
-                      disabled={isLoading || message?.length === 0}
-                      onClick={sendMessage}
-                      className="mr-1 p-1 rounded-md bg-transparent disabled:bg-gray-500 justify-self-end right-1 md:right-12 disabled:opacity-40">
-                    <FiSend className="h-4 w-4 mr-1 text-white "/>
+                    disabled={isLoading || message?.length === 0}
+                    onClick={sendMessage}
+                    className="mr-1 p-1 rounded-md bg-transparent disabled:bg-gray-500 justify-self-end right-1 md:right-12 disabled:opacity-40">
+                    <FiSend className="h-4 w-4 mr-1 text-white " />
                   </button>
                   <input
-                      type="file"
-                      ref={fileInputRef}
-                      style={{display: 'none'}}
-                      onChange={handleChange}
-                      accept=".png, .jpg, .jpeg"
-                      multiple
+                    type="file"
+                    ref={fileInputRef}
+                    style={{ display: 'none' }}
+                    onChange={handleChange}
+                    accept=".png, .jpg, .jpeg"
+                    multiple
                   />
                   <button
-                      disabled={selectedModel.id === GEMINI_PRO_MODEL.id}
-                      onClick={handleFileButtonClick}
-                      title={i18n.ONLY_AVAILABLE}
-                      className="mr-1 p-1 rounded-md bg-transparent disabled:bg-gray-500 justify-self-end right-1 md:right-12 disabled:opacity-40">
-                    <FiImage className="h-4 w-4 mr-1 text-white "/>
+                    disabled={selectedModel.id === GEMINI_PRO_MODEL.id}
+                    onClick={handleFileButtonClick}
+                    title={i18n.ONLY_AVAILABLE}
+                    className="mr-1 p-1 rounded-md bg-transparent disabled:bg-gray-500 justify-self-end right-1 md:right-12 disabled:opacity-40">
+                    <FiImage className="h-4 w-4 mr-1 text-white " />
                   </button>
                 </div>
               </div>

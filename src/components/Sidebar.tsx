@@ -1,32 +1,17 @@
-import React, { useEffect, useState } from "react";
 import {
-  AiOutlineMessage,
-  AiOutlinePlus,
-  AiOutlineUser,
-  AiOutlineSetting,
+  AiOutlinePlus
 } from "react-icons/ai";
 import { BiLinkExternal } from "react-icons/bi";
-import { FiMessageSquare } from "react-icons/fi";
-import { MdLogout } from "react-icons/md";
 import { FaGithub } from "react-icons/fa";
+import { FiMessageSquare } from "react-icons/fi";
 
 const Sidebar = (props: any) => {
-  const { I18nDictionary } = props;
+  const { I18nDictionary, apiKey, handleApiKey } = props;
   const i18n: I18nDictionary = I18nDictionary;
 
-  const [apiKey, setApiKey] = useState("");
   const handleInputChange = (event: any) => {
-    setApiKey(event.target.value);
-    localStorage.setItem("apiKey", event.target.value);
+    handleApiKey(event.target.value)
   };
-
-  useEffect(() => {
-    const apiKey = localStorage.getItem('apiKey');
-
-    if (apiKey) {
-      setApiKey(apiKey);
-    }
-  }, []);
 
   return (
     <div className="scrollbar-trigger flex h-full w-full flex-1 items-start border-white/20">

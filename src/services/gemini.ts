@@ -26,7 +26,6 @@ export default async function handler(body: any, callback: any) {
             let text = '';
             for await (const chunk of result.stream) {
                 const chunkText = chunk.text();
-                console.log(chunkText);
                 text += chunkText;
                 callback(text);
             }
@@ -43,7 +42,6 @@ export default async function handler(body: any, callback: any) {
         let text = '';
         for await (const chunk of result.stream) {
             const chunkText = chunk.text();
-            console.log(chunkText);
             text += chunkText;
             callback(text);
         }
