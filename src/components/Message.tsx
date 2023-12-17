@@ -2,6 +2,8 @@ import Image from "next/image";
 import { BsRobot } from "react-icons/bs";
 import { HiUser } from "react-icons/hi";
 import { TbCursorText } from "react-icons/tb";
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm'
 
 const Message = (props: any) => {
   const { message } = props;
@@ -51,7 +53,7 @@ const Message = (props: any) => {
                         alt="Imagem"
                       />
                     ) : (
-                      <p>{text}</p>
+                      <Markdown remarkPlugins={[remarkGfm]}>{text}</Markdown>
                     )
                   )}
                 </div>
