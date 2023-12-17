@@ -6,6 +6,7 @@ import useAutoResizeTextArea from "@/hooks/useAutoResizeTextArea";
 import Message from "./Message";
 import { GEMINI_PRO_MODEL, GEMINI_PRO_VISION_MODEL, GEMINI_MODELS } from "@/shared/Constants";
 import Image from "next/image";
+import gemini from "../services/gemini";
 
 const Chat = (props: any) => {
   const { toggleComponentVisibility, I18nDictionary } = props;
@@ -120,34 +121,50 @@ const Chat = (props: any) => {
     setInputImages([]);
 
     try {
-      const response = await fetch(`/api/gemini`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          historyMessages: [...conversation],
-          message: { parts: message, role: "user" },
-          model: selectedModel,
-          apiKey: apiKey,
-          images: base64Images
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-
-        // Add the message to the conversation
+      await gemini({
+        historyMessages: [...conversation],
+        message: { parts: message, role: "user" },
+        model: selectedModel,
+        apiKey: apiKey,
+        images: base64Images
+      }, (text: string) => {
+        console.log(new Date())
         setConversation([
           ...conversation,
           { parts: message, role: "user" },
           ...inputImages.map(x => { return { parts: x.toString(), role: "user" } }),
-          { parts: data.message, role: "model" },
+          { parts: text, role: "model" },
         ]);
-      } else {
-        console.error(response);
-        setErrorMessage(`Status ${response.statusText}. Error ${JSON.stringify(await response.json())}`);
-      }
+      })
+
+      // const response = await fetch(`/api/gemini`, {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     historyMessages: [...conversation],
+      //     message: { parts: message, role: "user" },
+      //     model: selectedModel,
+      //     apiKey: apiKey,
+      //     images: base64Images
+      //   }),
+      // });
+
+      // if (response.ok) {
+      //   const data = await response.json();
+
+      //   // Add the message to the conversation
+      //   setConversation([
+      //     ...conversation,
+      //     { parts: message, role: "user" },
+      //     ...inputImages.map(x => { return { parts: x.toString(), role: "user" } }),
+      //     { parts: data.message, role: "model" },
+      //   ]);
+      // } else {
+      //   console.error(response);
+      //   setErrorMessage(`Status ${response.statusText}. Error ${JSON.stringify(await response.json())}`);
+      // }
 
       setIsLoading(false);
     } catch (error: any) {

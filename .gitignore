@@ -37,4 +37,5 @@ next-env.d.ts
 
 # dotenv variables
 .env
+
 .yarn/install-state.gz

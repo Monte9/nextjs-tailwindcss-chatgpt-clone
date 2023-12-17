@@ -1,7 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import * as dotenv from "dotenv";
 import { NextApiRequest, NextApiResponse } from "next";
-dotenv.config();
 
 function fileToGenerativePart(path: string, mimeType: string) {
   return {
