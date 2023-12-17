@@ -299,6 +299,7 @@ const Chat = (props: any) => {
                 </div>
               ) : null}
               <div className="flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]">
+                <div className='flex justify-end'>
                 <textarea
                   ref={textAreaRef}
                   value={message}
@@ -323,36 +324,35 @@ const Chat = (props: any) => {
                           key={index}
                           src={image}
                           style={{ maxWidth: "150px", margin: "5px" }}
-                          width="300" height="500"  
+                          width="300" height="500"
                           alt={`Preview ${index + 1}`}
                         />
                       ))}
                     </div>
                   )}
                 </div>
-                <button
-                  disabled={isLoading || message?.length === 0}
-                  onClick={sendMessage}
-                  className="absolute p-1 rounded-md bottom-1.5 md:bottom-2.5 bg-transparent disabled:bg-gray-500 right-1 md:right-2 disabled:opacity-40"
-                >
-                  <FiSend className="h-4 w-4 mr-1 text-white " />
-                </button>
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  style={{ display: 'none' }}
-                  onChange={handleChange}
-                  accept=".png, .jpg, .jpeg"
-                  multiple
-                />
-                <button
-                  disabled={selectedModel.id === GEMINI_PRO_MODEL.id}
-                  onClick={handleFileButtonClick}
-                  title={i18n.ONLY_AVAILABLE}
-                  className="absolute p-1 rounded-md bottom-1.5 md:bottom-2.5 bg-transparent disabled:bg-gray-500 right-1 md:right-12 disabled:opacity-40"
-                >
-                  <FiImage className="h-4 w-4 mr-1 text-white " />
-                </button>
+                  <button
+                      disabled={isLoading || message?.length === 0}
+                      onClick={sendMessage}
+                      className="mr-1 p-1 rounded-md bg-transparent disabled:bg-gray-500 justify-self-end right-1 md:right-12 disabled:opacity-40">
+                    <FiSend className="h-4 w-4 mr-1 text-white "/>
+                  </button>
+                  <input
+                      type="file"
+                      ref={fileInputRef}
+                      style={{display: 'none'}}
+                      onChange={handleChange}
+                      accept=".png, .jpg, .jpeg"
+                      multiple
+                  />
+                  <button
+                      disabled={selectedModel.id === GEMINI_PRO_MODEL.id}
+                      onClick={handleFileButtonClick}
+                      title={i18n.ONLY_AVAILABLE}
+                      className="mr-1 p-1 rounded-md bg-transparent disabled:bg-gray-500 justify-self-end right-1 md:right-12 disabled:opacity-40">
+                    <FiImage className="h-4 w-4 mr-1 text-white "/>
+                  </button>
+                </div>
               </div>
             </div>
           </form>
