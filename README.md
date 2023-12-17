@@ -20,6 +20,14 @@ To get started with ChatGPT Clone, follow these steps:
 
 Contributions are welcome! If you find ChatGPT Clone useful, consider starring the repository on GitHub.
 
+## TODO
+
+1. When clicking the "New Chat" button, a new "New Conversation" tab should appear in the sidebar, and the message scope should switch to this new conversation. Clicking again on a conversation that already has a history should display the previous messages once again.
+2. Add an option to close the sidebar on desktop displays.
+3. Add translation support for other languages.
+
+Feel free to add your own ideas
+
 ## License
 
 This project is open source and available under the [MIT License](https://opensource.org/licenses/MIT).
