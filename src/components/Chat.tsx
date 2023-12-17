@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { FiImage, FiSend } from "react-icons/fi";
 import { BsChevronDown, BsPlusLg } from "react-icons/bs";
 import { RxHamburgerMenu } from "react-icons/rx";
-// import useAnalytics from "@/hooks/useAnalytics";
 import useAutoResizeTextArea from "@/hooks/useAutoResizeTextArea";
 import Message from "./Message";
 import { GEMINI_PRO_MODEL, GEMINI_PRO_VISION_MODEL } from "@/shared/Constants";
@@ -16,7 +15,6 @@ const Chat = (props: any) => {
   const [showEmptyChat, setShowEmptyChat] = useState(true);
   const [conversation, setConversation] = useState<any[]>([]);
   const [message, setMessage] = useState("");
-  // const { trackEvent } = useAnalytics();
   const textAreaRef = useAutoResizeTextArea();
   const bottomOfChatRef = useRef<HTMLDivElement>(null);
 
@@ -107,7 +105,6 @@ const Chat = (props: any) => {
       return;
     }
 
-    // trackEvent("send.message", { message: message });
     setIsLoading(true);
 
     // Add the message to the conversation
