@@ -46,6 +46,7 @@ const Message = (props: any) => {
                     text.startsWith('blob:') ? (
                       <Image
                         style={{ maxWidth: "150px", margin: "5px" }}
+                        width="300" height="500" 
                         src={text}
                         alt="Imagem do Blob"
                       />

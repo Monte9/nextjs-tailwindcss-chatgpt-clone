@@ -321,6 +321,7 @@ const Chat = (props: any) => {
                           key={index}
                           src={image}
                           style={{ maxWidth: "150px", margin: "5px" }}
+                          width="300" height="500"  
                           alt={`Preview ${index + 1}`}
                         />
                       ))}
