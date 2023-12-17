@@ -139,14 +139,6 @@ const Chat = (props: any) => {
         ]);
       })
 
-      if (conversation.length > 4 && !apiKey) {
-        setConversation([
-          ...conversation,
-          { parts: tutorialTxt, role: "system" },
-        ]);
-      }
-      console.log(conversation, apiKey)
-
       // const response = await fetch(`/api/gemini`, {
       //   method: "POST",
       //   headers: {
@@ -185,6 +177,14 @@ const Chat = (props: any) => {
 
       setIsLoading(false);
     }
+
+    if (conversation.length > 4 && !apiKey) {
+      setConversation([
+        ...conversation,
+        { parts: tutorialTxt, role: "system" },
+      ]);
+    }
+
     setBase64Images([]);
   };
 
