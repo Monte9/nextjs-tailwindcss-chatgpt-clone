@@ -5,7 +5,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import useAnalytics from "@/hooks/useAnalytics";
 import useAutoResizeTextArea from "@/hooks/useAutoResizeTextArea";
 import Message from "./Message";
-import { GEMINI_PRO_MODEL } from "@/shared/Constants";
+import { GEMINI_PRO_MODEL, GEMINI_PRO_VISION_MODEL } from "@/shared/Constants";
 
 const Chat = (props: any) => {
   const { toggleComponentVisibility } = props;
@@ -19,7 +19,8 @@ const Chat = (props: any) => {
   const textAreaRef = useAutoResizeTextArea();
   const bottomOfChatRef = useRef<HTMLDivElement>(null);
 
-  const selectedModel = GEMINI_PRO_MODEL;
+  const [avaliableModels] = useState([GEMINI_PRO_MODEL, GEMINI_PRO_VISION_MODEL]);
+  const [selectedModel, setSelectedModel] = useState(GEMINI_PRO_MODEL);
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -100,6 +101,11 @@ const Chat = (props: any) => {
       setErrorMessage("");
     }
 
+    if (selectedModel.id === GEMINI_PRO_VISION_MODEL.id && !inputImages?.length) {
+      setErrorMessage("Please select at least one image.");
+      return;
+    }
+
     trackEvent("send.message", { message: message });
     setIsLoading(true);
 
@@ -164,6 +170,16 @@ const Chat = (props: any) => {
     }
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const close = () => {
+    setIsOpen(false);
+  };
+
+  const onModelSelect = (model: any) => {
+    setSelectedModel(model);
+  }
+
   return (
     <div className="flex max-w-full flex-1 flex-col">
       <div className="sticky top-0 z-10 flex items-center border-b border-white/20 bg-gray-800 pl-1 pt-1 text-gray-200 sm:pl-3 md:hidden">
@@ -207,6 +223,7 @@ const Chat = (props: any) => {
                         aria-haspopup="true"
                         aria-expanded="false"
                         data-headlessui-state=""
+                        onClick={() => setIsOpen(!isOpen)}
                         aria-labelledby="headlessui-listbox-label-:r1: headlessui-listbox-button-:r0:"
                       >
                         <label
@@ -225,6 +242,25 @@ const Chat = (props: any) => {
                           <BsChevronDown className="h-4 w-4 text-gray-400" />
                         </span>
                       </button>
+
+                      {isOpen && (
+                        <div className="absolute z-10 top-14 w-full bg-white dark:bg-gray-800 shadow-md rounded-md">
+                          <ul className="py-1">
+                            {avaliableModels.map((model) => (
+                              <li
+                                key={model.id}
+                                className="text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                                onClick={() => {
+                                  onModelSelect(model);
+                                  close();
+                                }}
+                              >
+                                <span className="block py-2 px-4 truncate">{model.name}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <h1 className="text-2xl sm:text-4xl font-semibold text-center text-gray-200 dark:text-gray-600 flex gap-2 items-center justify-center h-screen">
@@ -293,6 +329,7 @@ const Chat = (props: any) => {
                   multiple
                 />
                 <button
+                  disabled={selectedModel.id === GEMINI_PRO_MODEL.id}
                   onClick={handleFileButtonClick}
                   className="absolute p-1 rounded-md bottom-1.5 md:bottom-2.5 bg-transparent disabled:bg-gray-500 right-1 md:right-12 disabled:opacity-40"
                 >
