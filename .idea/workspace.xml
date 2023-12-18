@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6a332ce8-5fc3-4fdd-befd-c9a6a57ffe1d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Chat.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Chat.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Message.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Message.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MobileSidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MobileSidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +58,7 @@
       <workItem from="1702784563696" duration="2315000" />
       <workItem from="1702827067539" duration="3144000" />
       <workItem from="1702869105807" duration="645000" />
-      <workItem from="1702920710680" duration="3382000" />
+      <workItem from="1702920710680" duration="4012000" />
     </task>
     <servers />
   </component>
