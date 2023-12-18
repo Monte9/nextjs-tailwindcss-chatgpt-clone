@@ -1,32 +1,17 @@
-import React, { useEffect, useState } from "react";
 import {
-  AiOutlineMessage,
-  AiOutlinePlus,
-  AiOutlineUser,
-  AiOutlineSetting,
+  AiOutlinePlus
 } from "react-icons/ai";
 import { BiLinkExternal } from "react-icons/bi";
-import { FiMessageSquare } from "react-icons/fi";
-import { MdLogout } from "react-icons/md";
 import { FaGithub } from "react-icons/fa";
+import { FiMessageSquare } from "react-icons/fi";
 
 const Sidebar = (props: any) => {
-  const { I18nDictionary } = props;
+  const { I18nDictionary, apiKey, handleApiKey } = props;
   const i18n: I18nDictionary = I18nDictionary;
 
-  const [apiKey, setApiKey] = useState("");
   const handleInputChange = (event: any) => {
-    setApiKey(event.target.value);
-    localStorage.setItem("apiKey", event.target.value);
+    handleApiKey(event.target.value)
   };
-
-  useEffect(() => {
-    const apiKey = localStorage.getItem('apiKey');
-
-    if (apiKey) {
-      setApiKey(apiKey);
-    }
-  }, []);
 
   return (
     <div className="scrollbar-trigger flex h-full w-full flex-1 items-start border-white/20">
@@ -78,7 +63,7 @@ const Sidebar = (props: any) => {
           className="flex py-3 px-3 items-center gap-3 rounded-md hover:bg-gray-500/10 transition-colors duration-200 text-white cursor-pointer text-sm"
         >
           <FaGithub className="h-4 w-4" />
-          {i18n.FORK_ME_GITHUB}
+          {i18n.START_ME_GITHUB}
         </a>
       </nav>
     </div>

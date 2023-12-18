@@ -19,5 +19,5 @@ export const i18nDictPt: I18nDictionary = {
     CLOSE_SIDEBAR: "Fechar barra lateral",
     SEND_NESSAGE: 'Enviar uma mensagem...',
     GEMINI_API_KEY: 'Chave de API do Gemini',
-    FORK_ME_GITHUB: 'Fork me on GitHub',
+    START_ME_GITHUB: 'Dê uma estrela a este projeto no GitHub',
 }

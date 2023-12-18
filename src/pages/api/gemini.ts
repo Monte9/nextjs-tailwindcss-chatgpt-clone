@@ -36,7 +36,6 @@ export default async function handler(
       const result = await model.generateContent([message.parts, ...imageParts]);
       const response = await result.response;
       const text = response.text();
-      console.log(text);
       return res.status(200).json({ message: text });
     }
 

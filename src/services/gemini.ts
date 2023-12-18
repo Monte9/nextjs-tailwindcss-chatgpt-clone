@@ -20,13 +20,12 @@ export default async function handler(body: any, callback: any) {
 
         if (images?.length) {
             const genAI = new GoogleGenerativeAI(apiKey);
-            const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+            const model = genAI.getGenerativeModel({ model: apiModel.id });
             const imageParts = images.map((x: any) => fileToGenerativePart(x.image, x.mimeType));
             const result = await model.generateContentStream([message.parts, ...imageParts]);
             let text = '';
             for await (const chunk of result.stream) {
                 const chunkText = chunk.text();
-                console.log(chunkText);
                 text += chunkText;
                 callback(text);
             }
@@ -43,14 +42,13 @@ export default async function handler(body: any, callback: any) {
         let text = '';
         for await (const chunk of result.stream) {
             const chunkText = chunk.text();
-            console.log(chunkText);
             text += chunkText;
             callback(text);
         }
 
         return text;
-    } catch (error) {
+    } catch (error: any) {
         console.error(error);
-        throw new Error("An error occurred during ping to Gemini. Please try again.");
+        throw new Error(`An error occurred during ping to Gemini. Please refresh your browser and try again.\n ${error.message}` );
     }
 }

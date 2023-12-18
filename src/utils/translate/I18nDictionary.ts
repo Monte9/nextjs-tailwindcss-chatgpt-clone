@@ -16,5 +16,5 @@ interface I18nDictionary {
     CLOSE_SIDEBAR: string;
     SEND_NESSAGE: string;
     GEMINI_API_KEY: string;
-    FORK_ME_GITHUB: string;
+    START_ME_GITHUB: string;
 }
