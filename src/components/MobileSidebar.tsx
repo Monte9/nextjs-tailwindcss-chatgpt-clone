@@ -25,7 +25,7 @@ const MobileSiderbar = (props: any) => {
             <div className="fixed inset-0 bg-gray-600 bg-opacity-75 opacity-100"></div>
             <div className="fixed inset-0 z-40 flex">
               <div
-                className="relative flex w-full max-w-xs flex-1 flex-col bg-gray-900 translate-x-0"
+                className="relative flex w-full max-w-xs flex-1 flex-col bg-cyan-950 translate-x-0"
                 id="headlessui-dialog-panel-:rf:"
                 data-headlessui-state="open"
               >

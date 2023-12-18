@@ -183,7 +183,7 @@ const Chat = (props: any) => {
 
   return (
     <div className="flex max-w-full flex-1 flex-col">
-      <div className="sticky top-0 z-10 flex items-center border-b border-white/20 pl-1 pt-1 text-gray-200 sm:pl-3 md:hidden">
+      <div className="sticky top-0 z-10 flex items-center border-b border-white/20 pl-1 pt-1 text-white sm:pl-3 md:hidden bg-cyan-950 ">
         <button
           type="button"
           className="-ml-0.5 -mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white dark:hover:text-white"
@@ -209,7 +209,6 @@ const Chat = (props: any) => {
                   {conversation.map((message, index) => (
                     <Message key={index} message={message} />
                   ))}
-                  <div className="w-full h-32 md:h-48 flex-shrink-0"></div>
                   <div ref={bottomOfChatRef}></div>
                 </div>
               ) : null}
@@ -264,7 +263,7 @@ const Chat = (props: any) => {
                       )}
                     </div>
                   </div>
-                  <h1 className="text-2xl drop-shadow-sm sm:text-4xl font-semibold text-center text-gray-200 dark:text-white flex gap-2 items-center justify-center h-screen">
+                  <h1 className="text-2xl drop-shadow-xl shadow-white sm:text-4xl font-semibold text-center text-gray-200 dark:text-white flex gap-2 items-center justify-center h-screen">
                     Gemini
                   </h1>
                 </div>
@@ -273,7 +272,7 @@ const Chat = (props: any) => {
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 w-full border-t md:border-t-0 dark:border-white/20 md:border-transparent md:dark:border-transparent md:bg-vert-light-gradient bg-white dark:bg-gray-800 md:!bg-transparent pt-2">
+        <div className="absolute bottom-0 left-0 w-full border-t md:border-t-0 dark:border-white/20 md:border-transparent md:dark:border-transparent md:bg-vert-light-gradient bg-white dark:bg-cyan-950 md:!bg-transparent pt-2">
           <form className="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
             <div className="relative flex flex-col h-full flex-1 items-stretch md:flex-col">
               {errorMessage ? (
@@ -283,7 +282,7 @@ const Chat = (props: any) => {
                   </div>
                 </div>
               ) : null}
-              <div className="flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-cyan-950 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]">
+              <div className="flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border border-white/10 bg-white dark:border-white/50 dark:text-white dark:bg-cyan-950 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]">
                 <div className='flex justify-end'>
                   <textarea
                     ref={textAreaRef}
