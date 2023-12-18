@@ -19,5 +19,5 @@ export const i18nDictEn: I18nDictionary = {
     CLOSE_SIDEBAR: "Close sidebar",
     SEND_NESSAGE: 'Send a message...',
     GEMINI_API_KEY: 'Gemini API key',
-    FORK_ME_GITHUB: 'Fork me on GitHub',
+    START_ME_GITHUB: 'Star this project on GitHub',
 }   
