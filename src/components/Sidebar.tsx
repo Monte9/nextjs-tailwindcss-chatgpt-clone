@@ -37,11 +37,11 @@ const Sidebar = (props: any) => {
         </a>
         <div className="flex-col flex-1 overflow-y-auto border-b border-white/20">
           <div className="flex flex-col gap-2 pb-2 text-gray-100 text-sm">
-            <a className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 group">
+            <a className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-[#386FA4] cursor-pointer break-all hover:pr-4 group">
               <FiMessageSquare className="h-4 w-4" />
               <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
                 {i18n.NEW_CONVERSATION}
-                <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
+                <div className="absolute inset-y-0 right-0 w-8 z-10"></div>
               </div>
             </a>
           </div>

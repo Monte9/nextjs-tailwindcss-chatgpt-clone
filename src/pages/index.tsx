@@ -26,7 +26,7 @@ export default function Home() {
       {isComponentVisible ? (
         <MobileSiderbar toggleComponentVisibility={toggleComponentVisibility} I18nDictionary={i18n} />
       ) : null}
-      <div className="dark hidden flex-shrink-0 bg-gray-900 md:flex md:w-[260px] md:flex-col">
+      <div className="dark hidden flex-shrink-0 bg-sky-950 md:flex md:w-[260px] md:flex-col">
         <div className="flex h-full min-h-0 flex-col ">
           <Sidebar I18nDictionary={i18n} />
         </div>
