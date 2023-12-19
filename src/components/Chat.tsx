@@ -202,17 +202,17 @@ const Chat = (props: any) => {
           <div className="react-scroll-to-bottom--css-ikyem-79elbk h-full dark:bg-sky-900">
             <div className="react-scroll-to-bottom--css-ikyem-1n7m0yu">
               {!showEmptyChat && conversation.length > 0 ? (
-                  <div className="flex flex-col items-center text-sm bg-gray-800">
-                    <div
-                        className="flex w-full items-center justify-center gap-1 border-b border-black/10 bg-gray-50 p-3 text-gray-500 dark:border-gray-900/50 dark:bg-gray-700 dark:text-gray-300">
-                      Model: {selectedModel.name}
-                    </div>
-                    {conversation.map((message, index) => (
-                        <Message key={index} message={message}/>
-                    ))}
-                    <div ref={bottomOfChatRef}></div>
-                    <div className="w-full h-32 md:h-48 flex-shrink-0 bg-sky-900"></div>
+                <div className="flex flex-col items-center text-sm bg-gray-800">
+                  <div
+                    className="flex w-full items-center justify-center gap-1 border-b border-black/10 bg-gray-50 p-3 text-gray-500 dark:border-gray-900/50 dark:bg-gray-700 dark:text-gray-300">
+                    Model: {selectedModel.name}
                   </div>
+                  {conversation.map((message, index) => (
+                    <Message key={index} message={message} />
+                  ))}
+                  <div ref={bottomOfChatRef}></div>
+                  <div className="w-full h-32 md:h-48 flex-shrink-0 bg-sky-900"></div>
+                </div>
               ) : null}
               {showEmptyChat ? (
                 <div className="py-10 relative w-full flex flex-col h-full">
