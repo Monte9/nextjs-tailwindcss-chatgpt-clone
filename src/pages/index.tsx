@@ -15,7 +15,7 @@ export default function Home() {
     const preferredLanguage = navigator.language.split('-')[0];
     if (['pt'].includes(preferredLanguage))
       setI18n(i18nDictPt);
-  });
+  }, [isComponentVisible]);
 
     useEffect(() => {
     const apiKey = localStorage.getItem('apiKey');
