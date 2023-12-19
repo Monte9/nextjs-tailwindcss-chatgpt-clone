@@ -9,6 +9,7 @@ import Image from "next/image";
 import gemini from "../services/gemini";
 import { tutorialTxt } from "@/utils/tutorialFirstAccess";
 import { Image64 } from "../types/Image";
+import { Conversation } from "@/types/Conversation";
 
 const Chat = (props: any) => {
   const { toggleComponentVisibility, I18nDictionary, apiKey, handleApiKey } = props;
@@ -18,13 +19,16 @@ const Chat = (props: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showEmptyChat, setShowEmptyChat] = useState(true);
-  const [conversation, setConversation] = useState<any[]>([]);
+  const [conversation, setConversation] = useState<Conversation[]>([]);
   const [message, setMessage] = useState("");
   const textAreaRef = useAutoResizeTextArea();
   const bottomOfChatRef = useRef<HTMLDivElement>(null);
 
   const [avaliableModels] = useState(GEMINI_MODELS.filter(x => x.available));
   const [selectedModel, setSelectedModel] = useState(GEMINI_PRO_MODEL);
+  const [base64Images, setBase64Images] = useState<Image64[]>([]);
+  const [inputImages, setInputImages] = useState<any[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -39,7 +43,6 @@ const Chat = (props: any) => {
     }
   }, [conversation]);
 
-  const [base64Images, setBase64Images] = useState<Image64[]>([]);
 
   const getImageMimeType = (image: any): string => {
     const blob = image instanceof Blob ? image : new Blob([image]);
@@ -65,7 +68,6 @@ const Chat = (props: any) => {
     });
   };
 
-  const [inputImages, setInputImages] = useState<any[]>([]);
 
   const handleChange = async (e: any) => {
     if (e.target.files && e.target.files[0]) {
@@ -83,7 +85,6 @@ const Chat = (props: any) => {
   };
 
   const fileInputRef = useRef<any>();
-
   const handleFileButtonClick = (e: any) => {
     e.preventDefault();
     fileInputRef?.current?.click();
@@ -91,12 +92,6 @@ const Chat = (props: any) => {
 
   const sendMessage = async (e: any) => {
     e.preventDefault();
-
-    // console.log(apiKey)
-    // if (!apiKey) {
-    //   setErrorMessage(i18n.PLEASE_ENTER_API_KEY);
-    //   return;
-    // }
 
     if (selectedModel.id === GEMINI_PRO_MODEL.id && !message?.length) {
       setErrorMessage(i18n.PLEASE_ENTER_MESSAGE);
@@ -144,9 +139,7 @@ const Chat = (props: any) => {
         setConversation([
           ...conversation,
           { parts: message, role: "user" },
-          ...imagesChat.map(x => {
-            return { parts: x.image.base64, role: "user", image: x.image }
-          }),
+          ...imagesChat,
           { parts: text, role: "model" },
         ]);
       })
@@ -183,7 +176,6 @@ const Chat = (props: any) => {
     }
   };
 
-  const [isOpen, setIsOpen] = useState(false);
 
   const close = () => {
     setIsOpen(false);
