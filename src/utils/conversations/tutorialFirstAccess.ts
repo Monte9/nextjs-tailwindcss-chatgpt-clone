@@ -1,4 +1,4 @@
-export const tutorialTxt= `# AVISO: Configuração da API no Gemini
+export const tutorialTxt = `# AVISO: Configuração da API no Gemini
 
 Para continuar a usar o serviço, é crucial configurar a sua chave de API. Siga os passos abaixo para realizar essa configuração:
 
