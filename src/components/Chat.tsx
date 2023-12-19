@@ -191,6 +191,10 @@ const Chat = (props: any) => {
     setSelectedModel(model);
   }
 
+  const getLastIndexArray = (array: any, id: number): boolean => {
+    return array.length - 1 === id
+  }
+
   return (
     <div className="flex max-w-full flex-1 flex-col">
       <div className="sticky top-0 z-10 flex items-center border-b border-white/20 pl-1 pt-1 text-white sm:pl-3 md:hidden bg-cyan-950 ">
@@ -217,9 +221,16 @@ const Chat = (props: any) => {
                     className="flex w-full items-center justify-center gap-1 border-b border-black/10 bg-gray-50 p-3 text-gray-500 dark:border-gray-900/50 dark:bg-gray-700 dark:text-gray-300">
                     Model: {selectedModel.name}
                   </div>
-                  {conversation.filter(x => x.type != "command").map((message, index) => (
-                    <Message key={index} message={message} />
-                  ))}
+                  {conversation.filter(x => x.type != "command").map((message, index: number) => (
+                    <Message
+                      key={index}
+                      id={index}
+                      message={message}
+                      isLoading={isLoading}
+                      isLast={getLastIndexArray(conversation, index)}
+                    />
+                  ))
+                  }
                   <div ref={bottomOfChatRef}></div>
                   <div className="w-full h-32 md:h-48 flex-shrink-0 bg-sky-900"></div>
                 </div>
