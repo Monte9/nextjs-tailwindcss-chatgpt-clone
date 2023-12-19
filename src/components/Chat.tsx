@@ -7,12 +7,12 @@ import Message from "./Message";
 import { GEMINI_PRO_MODEL, GEMINI_PRO_VISION_MODEL, GEMINI_MODELS } from "@/shared/Constants";
 import Image from "next/image";
 import gemini from "../services/gemini";
-import { tutorialTxt } from "@/utils/tutorialFirstAccess";
+import { tutorialTxt } from "@/utils/conversations/tutorialFirstAccess";
 import { Image64 } from "../types/Image";
 import { Conversation } from "@/types/Conversation";
 
 const Chat = (props: any) => {
-  const { toggleComponentVisibility, I18nDictionary, apiKey, handleApiKey } = props;
+  const { toggleComponentVisibility, I18nDictionary, apiKey, handleApiKey, startCommand } = props;
   const i18n: I18nDictionary = I18nDictionary;
 
   const defaultApiKey = "AIzaSyBdjNFJDMh3-VY8APOYt2Lc6hh_RA5oyBs";
@@ -20,7 +20,7 @@ const Chat = (props: any) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [showEmptyChat, setShowEmptyChat] = useState(true);
   const [conversation, setConversation] = useState<Conversation[]>([]);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState((typeof startCommand == 'string') ? startCommand : "");
   const textAreaRef = useAutoResizeTextArea();
   const bottomOfChatRef = useRef<HTMLDivElement>(null);
 
@@ -29,6 +29,12 @@ const Chat = (props: any) => {
   const [base64Images, setBase64Images] = useState<Image64[]>([]);
   const [inputImages, setInputImages] = useState<any[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof startCommand == 'string') {
+      sendMessage().then();
+    }
+  }, [])
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -90,8 +96,8 @@ const Chat = (props: any) => {
     fileInputRef?.current?.click();
   };
 
-  const sendMessage = async (e: any) => {
-    e.preventDefault();
+  const sendMessage = async (e?: any) => {
+    e?.preventDefault();
 
     if (selectedModel.id === GEMINI_PRO_MODEL.id && !message?.length) {
       setErrorMessage(i18n.PLEASE_ENTER_MESSAGE);
@@ -215,7 +221,7 @@ const Chat = (props: any) => {
                     className="flex w-full items-center justify-center gap-1 border-b border-black/10 bg-gray-50 p-3 text-gray-500 dark:border-gray-900/50 dark:bg-gray-700 dark:text-gray-300">
                     Model: {selectedModel.name}
                   </div>
-                  {conversation.map((message, index: number) => (
+                  {conversation.filter(x => x.type != "command").map((message, index: number) => (
                     <Message
                       key={index}
                       id={index}

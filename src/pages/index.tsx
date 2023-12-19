@@ -6,7 +6,7 @@ import { i18nDictEn } from "../utils/translate/i18n-en";
 import { i18nDictPt } from "../utils/translate/i18n-pt";
 import { Analytics } from "@vercel/analytics/react";
 
-export default function Home() {
+export default function Home(startCommand?: string) {
   const [isComponentVisible, setIsComponentVisible] = useState(false);
   const [i18n, setI18n] = useState(i18nDictEn);
   const [apiKey, setApiKey] = useState<any>();
@@ -43,7 +43,7 @@ export default function Home() {
           <Sidebar I18nDictionary={i18n} apiKey={apiKey} handleApiKey={handleApiKey} />
         </div>
       </div>
-      <Chat toggleComponentVisibility={toggleComponentVisibility} I18nDictionary={i18n} apiKey={apiKey} handleApiKey={handleApiKey} />
+      <Chat toggleComponentVisibility={toggleComponentVisibility} I18nDictionary={i18n} apiKey={apiKey} handleApiKey={handleApiKey} startCommand={startCommand} />
       <Analytics />
     </main>
   );
