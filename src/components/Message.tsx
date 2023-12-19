@@ -4,9 +4,10 @@ import { HiUser } from "react-icons/hi";
 import { TbCursorText } from "react-icons/tb";
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm'
+import { ChatLoading } from "@/components/Loading";
 
 const Message = (props: any) => {
-  const { message } = props;
+  const { message, isLoading, id, isLast } = props;
   const { role, parts: text, image } = message;
 
   const isUser = role === "user";
@@ -23,7 +24,9 @@ const Message = (props: any) => {
               {isUser ? (
                 <HiUser className="h-4 w-4 text-white" />
               ) : (
-                <BsRobot className="h-4 w-4 text-white" />
+                isLast && isLoading ? (
+                  <ChatLoading />
+                ) : (<BsRobot className="h-4 w-4 text-white" />)
               )}
             </div>
             <div className="text-xs flex items-center justify-center gap-1 absolute left-0 top-2 -ml-4 -translate-x-full group-hover:visible !invisible">
@@ -48,8 +51,8 @@ const Message = (props: any) => {
                     image ? (
                       <Image
                         style={{ maxWidth: "150px", margin: "5px" }}
-                        width="300" height="500" 
-                        src={`data:${image.mimeType};base64,${image.base64}`} 
+                        width="300" height="500"
+                        src={`data:${image.mimeType};base64,${image.base64}`}
                         alt="Imagem"
                       />
                     ) : (
