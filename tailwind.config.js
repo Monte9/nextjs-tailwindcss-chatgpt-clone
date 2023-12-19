@@ -17,6 +17,10 @@ module.exports = {
       },
       backgroundImage: {
         'vert-dark-gradient': 'linear-gradient(180deg, rgba(53, 55, 64, 0), #353740 58.85%)',
+      },
+      animation: {
+        // Bounces 5 times 1s equals 5 seconds
+        'pulse': 'pulse 3.5s ease-in-out infinite',
       }
     },
   },
