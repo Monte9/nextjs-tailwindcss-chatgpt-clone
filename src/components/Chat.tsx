@@ -8,6 +8,8 @@ import { GEMINI_PRO_MODEL, GEMINI_PRO_VISION_MODEL, GEMINI_MODELS } from "@/shar
 import Image from "next/image";
 import gemini from "../services/gemini";
 import { tutorialTxt } from "@/utils/tutorialFirstAccess";
+import { Image64 } from "../types/Image";
+import { Conversation } from "@/types/Conversation";
 
 const Chat = (props: any) => {
   const { toggleComponentVisibility, I18nDictionary, apiKey, handleApiKey } = props;
@@ -17,13 +19,16 @@ const Chat = (props: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showEmptyChat, setShowEmptyChat] = useState(true);
-  const [conversation, setConversation] = useState<any[]>([]);
+  const [conversation, setConversation] = useState<Conversation[]>([]);
   const [message, setMessage] = useState("");
   const textAreaRef = useAutoResizeTextArea();
   const bottomOfChatRef = useRef<HTMLDivElement>(null);
 
   const [avaliableModels] = useState(GEMINI_MODELS.filter(x => x.available));
   const [selectedModel, setSelectedModel] = useState(GEMINI_PRO_MODEL);
+  const [base64Images, setBase64Images] = useState<Image64[]>([]);
+  const [inputImages, setInputImages] = useState<any[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -38,7 +43,6 @@ const Chat = (props: any) => {
     }
   }, [conversation]);
 
-  const [base64Images, setBase64Images] = useState<{ image: string, mimeType: string }[]>([]);
 
   const getImageMimeType = (image: any): string => {
     const blob = image instanceof Blob ? image : new Blob([image]);
@@ -46,7 +50,7 @@ const Chat = (props: any) => {
     return type;
   };
 
-  const convertImageToBase64 = (image: any): Promise<{ image: string, mimeType: string }> => {
+  const convertImageToBase64 = (image: any): Promise<Image64> => {
     return new Promise((resolve) => {
 
       const reader = new FileReader();
@@ -55,7 +59,7 @@ const Chat = (props: any) => {
         const base64Image = e.target.result.replace(/^data:image\/[a-z]+;base64,/, '');
         const mimeType = getImageMimeType(image);
         resolve({
-          image: base64Image,
+          base64: base64Image,
           mimeType
         })
       };
@@ -64,7 +68,6 @@ const Chat = (props: any) => {
     });
   };
 
-  const [inputImages, setInputImages] = useState<any[]>([]);
 
   const handleChange = async (e: any) => {
     if (e.target.files && e.target.files[0]) {
@@ -82,7 +85,6 @@ const Chat = (props: any) => {
   };
 
   const fileInputRef = useRef<any>();
-
   const handleFileButtonClick = (e: any) => {
     e.preventDefault();
     fileInputRef?.current?.click();
@@ -91,31 +93,35 @@ const Chat = (props: any) => {
   const sendMessage = async (e: any) => {
     e.preventDefault();
 
-    // console.log(apiKey)
-    // if (!apiKey) {
-    //   setErrorMessage(i18n.PLEASE_ENTER_API_KEY);
-    //   return;
-    // }
-
-    if (message.length < 1) {
+    if (selectedModel.id === GEMINI_PRO_MODEL.id && !message?.length) {
       setErrorMessage(i18n.PLEASE_ENTER_MESSAGE);
       return;
     } else {
       setErrorMessage("");
     }
 
-    if (selectedModel.id === GEMINI_PRO_VISION_MODEL.id && !inputImages?.length) {
+    if (selectedModel.id === GEMINI_PRO_VISION_MODEL.id && !(message?.length || base64Images?.length)) {
+      setErrorMessage(i18n.PLEASE_SELECT_IMAGE);
+      return;
+    } else {
+      setErrorMessage("");
+    }
+
+    if (selectedModel.id === GEMINI_PRO_VISION_MODEL.id && !(base64Images?.length || conversation.filter(x => x.image)?.length)) {
       setErrorMessage(i18n.PLEASE_SELECT_IMAGE);
       return;
     }
 
     setIsLoading(true);
 
+    const imagesChat = base64Images.map(image => {
+      return { image: image, role: "user" };
+    });
     // Add the message to the conversation
     setConversation([
       ...conversation,
       { parts: message, role: "user" },
-      ...inputImages.map(x => { return { parts: x.toString(), role: "user" } }),
+      ...imagesChat,
       { parts: null, role: "system" },
     ]);
 
@@ -125,16 +131,15 @@ const Chat = (props: any) => {
 
     try {
       await gemini({
-        historyMessages: [...conversation],
+        historyMessages: [...conversation, ...imagesChat],
         message: { parts: message, role: "user" },
         model: selectedModel,
         apiKey: apiKey || defaultApiKey,
-        images: base64Images
       }, (text: string) => {
         setConversation([
           ...conversation,
           { parts: message, role: "user" },
-          ...inputImages.map(x => { return { parts: x.toString(), role: "user" } }),
+          ...imagesChat,
           { parts: text, role: "model" },
         ]);
       })
@@ -171,7 +176,6 @@ const Chat = (props: any) => {
     }
   };
 
-  const [isOpen, setIsOpen] = useState(false);
 
   const close = () => {
     setIsOpen(false);
@@ -202,17 +206,17 @@ const Chat = (props: any) => {
           <div className="react-scroll-to-bottom--css-ikyem-79elbk h-full dark:bg-sky-900">
             <div className="react-scroll-to-bottom--css-ikyem-1n7m0yu">
               {!showEmptyChat && conversation.length > 0 ? (
-                  <div className="flex flex-col items-center text-sm bg-gray-800">
-                    <div
-                        className="flex w-full items-center justify-center gap-1 border-b border-black/10 bg-gray-50 p-3 text-gray-500 dark:border-gray-900/50 dark:bg-gray-700 dark:text-gray-300">
-                      Model: {selectedModel.name}
-                    </div>
-                    {conversation.map((message, index) => (
-                        <Message key={index} message={message}/>
-                    ))}
-                    <div ref={bottomOfChatRef}></div>
-                    <div className="w-full h-32 md:h-48 flex-shrink-0 bg-sky-900"></div>
+                <div className="flex flex-col items-center text-sm bg-gray-800">
+                  <div
+                    className="flex w-full items-center justify-center gap-1 border-b border-black/10 bg-gray-50 p-3 text-gray-500 dark:border-gray-900/50 dark:bg-gray-700 dark:text-gray-300">
+                    Model: {selectedModel.name}
                   </div>
+                  {conversation.map((message, index) => (
+                    <Message key={index} message={message} />
+                  ))}
+                  <div ref={bottomOfChatRef}></div>
+                  <div className="w-full h-32 md:h-48 flex-shrink-0 bg-sky-900"></div>
+                </div>
               ) : null}
               {showEmptyChat ? (
                 <div className="py-10 relative w-full flex flex-col h-full">
