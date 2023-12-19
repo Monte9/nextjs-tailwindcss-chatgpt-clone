@@ -7,7 +7,7 @@ import remarkGfm from 'remark-gfm'
 
 const Message = (props: any) => {
   const { message } = props;
-  const { role, parts: text } = message;
+  const { role, parts: text, image } = message;
 
   const isUser = role === "user";
 
@@ -45,11 +45,11 @@ const Message = (props: any) => {
                   {!isUser && text === null ? (
                     <TbCursorText className="h-6 w-6 animate-pulse" />
                   ) : (
-                    text.startsWith('blob:') ? (
+                    image ? (
                       <Image
                         style={{ maxWidth: "150px", margin: "5px" }}
                         width="300" height="500" 
-                        src={text}
+                        src={`data:${image.mimeType};base64,${image.base64}`} 
                         alt="Imagem"
                       />
                     ) : (
