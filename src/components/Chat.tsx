@@ -8,6 +8,7 @@ import { GEMINI_PRO_MODEL, GEMINI_PRO_VISION_MODEL, GEMINI_MODELS } from "@/shar
 import Image from "next/image";
 import gemini from "../services/gemini";
 import { tutorialTxt } from "@/utils/tutorialFirstAccess";
+import { Image64 } from "../types/Image";
 
 const Chat = (props: any) => {
   const { toggleComponentVisibility, I18nDictionary, apiKey, handleApiKey } = props;
@@ -38,7 +39,7 @@ const Chat = (props: any) => {
     }
   }, [conversation]);
 
-  const [base64Images, setBase64Images] = useState<{ image: string, mimeType: string }[]>([]);
+  const [base64Images, setBase64Images] = useState<Image64[]>([]);
 
   const getImageMimeType = (image: any): string => {
     const blob = image instanceof Blob ? image : new Blob([image]);
@@ -46,7 +47,7 @@ const Chat = (props: any) => {
     return type;
   };
 
-  const convertImageToBase64 = (image: any): Promise<{ image: string, mimeType: string }> => {
+  const convertImageToBase64 = (image: any): Promise<Image64> => {
     return new Promise((resolve) => {
 
       const reader = new FileReader();
@@ -55,7 +56,7 @@ const Chat = (props: any) => {
         const base64Image = e.target.result.replace(/^data:image\/[a-z]+;base64,/, '');
         const mimeType = getImageMimeType(image);
         resolve({
-          image: base64Image,
+          base64: base64Image,
           mimeType
         })
       };
@@ -97,25 +98,35 @@ const Chat = (props: any) => {
     //   return;
     // }
 
-    if (message.length < 1) {
+    if (selectedModel.id === GEMINI_PRO_MODEL.id && !message?.length) {
       setErrorMessage(i18n.PLEASE_ENTER_MESSAGE);
       return;
     } else {
       setErrorMessage("");
     }
 
-    if (selectedModel.id === GEMINI_PRO_VISION_MODEL.id && !inputImages?.length) {
+    if (selectedModel.id === GEMINI_PRO_VISION_MODEL.id && !(message?.length || base64Images?.length)) {
+      setErrorMessage(i18n.PLEASE_SELECT_IMAGE);
+      return;
+    } else {
+      setErrorMessage("");
+    }
+
+    if (selectedModel.id === GEMINI_PRO_VISION_MODEL.id && !(base64Images?.length || conversation.filter(x => x.image)?.length)) {
       setErrorMessage(i18n.PLEASE_SELECT_IMAGE);
       return;
     }
 
     setIsLoading(true);
 
+    const imagesChat = base64Images.map(image => {
+      return { image: image, role: "user" };
+    });
     // Add the message to the conversation
     setConversation([
       ...conversation,
       { parts: message, role: "user" },
-      ...inputImages.map(x => { return { parts: x.toString(), role: "user" } }),
+      ...imagesChat,
       { parts: null, role: "system" },
     ]);
 
@@ -125,16 +136,17 @@ const Chat = (props: any) => {
 
     try {
       await gemini({
-        historyMessages: [...conversation],
+        historyMessages: [...conversation, ...imagesChat],
         message: { parts: message, role: "user" },
         model: selectedModel,
         apiKey: apiKey || defaultApiKey,
-        images: base64Images
       }, (text: string) => {
         setConversation([
           ...conversation,
           { parts: message, role: "user" },
-          ...inputImages.map(x => { return { parts: x.toString(), role: "user" } }),
+          ...imagesChat.map(x => {
+            return { parts: x.image.base64, role: "user", image: x.image }
+          }),
           { parts: text, role: "model" },
         ]);
       })
