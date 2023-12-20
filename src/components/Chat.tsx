@@ -348,7 +348,6 @@ const Chat = (props: any) => {
                   <button
                     disabled={isLoading}
                     onClick={handleFileButtonClick}
-                    title={i18n.ONLY_AVAILABLE}
                     className="mr-1 p-1 rounded-md bg-transparent disabled:bg-gray-500 justify-self-end right-1 md:right-12 disabled:opacity-40">
                     <FiImage className="h-4 w-4 mr-1 text-white " />
                   </button>

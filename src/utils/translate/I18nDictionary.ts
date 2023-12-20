@@ -9,7 +9,6 @@ interface I18nDictionary {
     MODEL: string;
     SEND_MESSAGE: string;
     GEMINI_INFORMATION: string;
-    ONLY_AVAILABLE: string;
     PLEASE_ENTER_MESSAGE: string;
     PLEASE_SELECT_IMAGE: string;
     PLEASE_ENTER_MESSAGE_OR_IMAGE: string;

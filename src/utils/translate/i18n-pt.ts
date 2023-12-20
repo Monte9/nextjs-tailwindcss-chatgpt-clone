@@ -12,7 +12,6 @@ export const i18nDictPt: I18nDictionary = {
     MODEL: 'Modelo',
     SEND_MESSAGE: 'Enviar mensagem',
     GEMINI_INFORMATION: 'O Gemini pode fornecer informações imprecisas sobre pessoas, lugares ou fatos.',
-    ONLY_AVAILABLE: 'Disponível apenas no Gemini Pro Vision',
     PLEASE_ENTER_MESSAGE: 'Por favor, digite uma mensagem.',
     PLEASE_SELECT_IMAGE: 'Por favor, selecione pelo menos uma imagem.',
     PLEASE_ENTER_MESSAGE_OR_IMAGE: 'Por favor, insira uma mensagem ou imagem.',
