@@ -9,7 +9,7 @@ import { Analytics } from "@vercel/analytics/react";
 export default function Home(startCommand?: string) {
   const [isComponentVisible, setIsComponentVisible] = useState(false);
   const [i18n, setI18n] = useState(i18nDictEn);
-  const [apiKey, setApiKey] = useState<any>();
+  const [apiKey, setApiKey] = useState<any>(process.env.GEMINI_KEY);
 
   useEffect(() => {
     const preferredLanguage = navigator.language.split('-')[0];
