@@ -6,4 +6,5 @@ export type GeminiHandler = {
     model: AIModel;
     historyMessages: Conversation[];
     message: Conversation;
+    hasImages?: boolean;
 }

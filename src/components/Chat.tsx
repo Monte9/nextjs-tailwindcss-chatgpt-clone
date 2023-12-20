@@ -10,6 +10,7 @@ import gemini from "../services/gemini";
 import { tutorialTxt } from "@/utils/conversations/tutorialFirstAccess";
 import { Image64 } from "../types/Image";
 import { Conversation } from "@/types/Conversation";
+import { GeminiHandler } from "@/types/GeminiHandler";
 
 const Chat = (props: any) => {
   const { toggleComponentVisibility, I18nDictionary, apiKey, handleApiKey, startCommand } = props;
@@ -99,23 +100,11 @@ const Chat = (props: any) => {
   const sendMessage = async (e?: any) => {
     e?.preventDefault();
 
-    if (selectedModel.id === GEMINI_PRO_MODEL.id && !message?.length) {
-      setErrorMessage(i18n.PLEASE_ENTER_MESSAGE);
+    if (!message?.length && !base64Images?.length) {
+      setErrorMessage(i18n.PLEASE_ENTER_MESSAGE_OR_IMAGE);
       return;
     } else {
       setErrorMessage("");
-    }
-
-    if (selectedModel.id === GEMINI_PRO_VISION_MODEL.id && !(message?.length || base64Images?.length)) {
-      setErrorMessage(i18n.PLEASE_SELECT_IMAGE);
-      return;
-    } else {
-      setErrorMessage("");
-    }
-
-    if (selectedModel.id === GEMINI_PRO_VISION_MODEL.id && !(base64Images?.length || conversation.filter(x => x.image)?.length)) {
-      setErrorMessage(i18n.PLEASE_SELECT_IMAGE);
-      return;
     }
 
     setIsLoading(true);
@@ -123,25 +112,32 @@ const Chat = (props: any) => {
     const imagesChat = base64Images.map(image => {
       return { image: image, role: "user" };
     });
-    // Add the message to the conversation
-    setConversation([
-      ...conversation,
-      { parts: message, role: "user" },
+
+    let currentConversation = conversation;
+    if (message) currentConversation.push({ parts: message, role: "user" });
+    currentConversation = [
+      ...currentConversation,
       ...imagesChat,
       { parts: null, role: "system" },
-    ]);
+    ];
+    // Add the message to the conversation
+    setConversation(currentConversation);
 
     setMessage("");
     setShowEmptyChat(false);
     setInputImages([]);
 
     try {
-      await gemini({
+      const geminiHandler = {
         historyMessages: [...conversation, ...imagesChat],
         message: { parts: message, role: "user" },
         model: selectedModel,
         apiKey: apiKey || defaultApiKey,
-      }, (text: string) => {
+      } as GeminiHandler;
+      geminiHandler.hasImages = !!(geminiHandler.historyMessages.filter(x => x.image).length || geminiHandler.message.image);
+      setSelectedModel(geminiHandler.hasImages ? GEMINI_PRO_VISION_MODEL : GEMINI_PRO_MODEL);
+
+      await gemini(geminiHandler, (text: string) => {
         setConversation([
           ...conversation,
           { parts: message, role: "user" },
@@ -339,7 +335,7 @@ const Chat = (props: any) => {
                     )}
                   </div>
                   <button
-                    disabled={isLoading || message?.length === 0}
+                    disabled={isLoading || !(message?.length || base64Images?.length)}
                     onClick={sendMessage}
                     className="mr-1 p-1 rounded-md bg-transparent disabled:bg-gray-500 justify-self-end right-1 md:right-12 disabled:opacity-40">
                     <FiSend className="h-4 w-4 mr-1 text-white " />
@@ -353,7 +349,7 @@ const Chat = (props: any) => {
                     multiple
                   />
                   <button
-                    disabled={selectedModel.id === GEMINI_PRO_MODEL.id}
+                    disabled={isLoading}
                     onClick={handleFileButtonClick}
                     title={i18n.ONLY_AVAILABLE}
                     className="mr-1 p-1 rounded-md bg-transparent disabled:bg-gray-500 justify-self-end right-1 md:right-12 disabled:opacity-40">

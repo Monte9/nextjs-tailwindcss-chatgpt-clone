@@ -15,6 +15,7 @@ export const i18nDictEn: I18nDictionary = {
     ONLY_AVAILABLE: 'Only available on Gemini Pro Vision',
     PLEASE_ENTER_MESSAGE: 'Please enter a message.',
     PLEASE_SELECT_IMAGE: 'Please select at least one image.',
+    PLEASE_ENTER_MESSAGE_OR_IMAGE: 'Please enter a message or image.',
     PLEASE_ENTER_API_KEY: 'Please enter API key.',
     CLOSE_SIDEBAR: "Close sidebar",
     SEND_NESSAGE: 'Send a message...',

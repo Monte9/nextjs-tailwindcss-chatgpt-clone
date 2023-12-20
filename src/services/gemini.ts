@@ -1,4 +1,4 @@
-import { GEMINI_PRO_VISION_MODEL } from "@/shared/Constants";
+import { GEMINI_PRO_MODEL, GEMINI_PRO_VISION_MODEL } from "@/shared/Constants";
 import { Conversation } from "@/types/Conversation";
 import { GeminiHandler } from "@/types/GeminiHandler";
 import { AIModel } from "@/types/Model";
@@ -20,21 +20,21 @@ export default async function handler(body: GeminiHandler, callback: any) {
         const apiModel = body.model;
         const historyMessages = body.historyMessages.filter((x: any) => ["user", "model"].includes(x.role));
         const message = body.message;
-
-        if (apiModel.id == GEMINI_PRO_VISION_MODEL.id) {
+        const hasImages = body.hasImages;
+        if (hasImages) {
             return await geminiProVision(apiKey, apiModel, historyMessages, message, callback);
         }
 
         return await geminiPro(apiKey, apiModel, historyMessages, message, callback);
     } catch (error: any) {
         console.error(error);
-        throw new Error(`An error occurred during ping to Gemini. Please refresh your browser and try again.\n ${error.message}` );
+        throw new Error(`An error occurred during ping to Gemini. Please refresh your browser and try again.\n ${error.message}`);
     }
 }
 
 async function geminiPro(apiKey: string, apiModel: AIModel, historyMessages: Conversation[], message: Conversation, callback: any) {
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: apiModel.id });
+    const model = genAI.getGenerativeModel({ model: GEMINI_PRO_MODEL.id });
     const chat = model.startChat({
         history: historyMessages as InputContent[],
     });
@@ -52,7 +52,7 @@ async function geminiPro(apiKey: string, apiModel: AIModel, historyMessages: Con
 
 async function geminiProVision(apiKey: string, apiModel: AIModel, historyMessages: Conversation[], message: Conversation, callback: any) {
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: apiModel.id });
+    const model = genAI.getGenerativeModel({ model: GEMINI_PRO_VISION_MODEL.id });
     const parts = historyMessages.map((x: any) => {
         if (x.image) {
             return fileToGenerativePart(x.image.base64, x.image.mimeType) as InlineDataPart;
@@ -61,9 +61,11 @@ async function geminiProVision(apiKey: string, apiModel: AIModel, historyMessage
             text: x.parts
         } as TextPart;
     }) as Part[];
-    parts.push({
-        text: message.parts as string
-    });
+    if (message.parts)
+        parts.push({
+            text: message.parts as string
+        });
+
     const content = {
         parts: parts
     } as Content;

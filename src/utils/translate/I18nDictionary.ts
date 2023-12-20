@@ -12,6 +12,7 @@ interface I18nDictionary {
     ONLY_AVAILABLE: string;
     PLEASE_ENTER_MESSAGE: string;
     PLEASE_SELECT_IMAGE: string;
+    PLEASE_ENTER_MESSAGE_OR_IMAGE: string;
     PLEASE_ENTER_API_KEY: string;
     CLOSE_SIDEBAR: string;
     SEND_NESSAGE: string;
