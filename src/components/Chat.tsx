@@ -112,16 +112,13 @@ const Chat = (props: any) => {
     const imagesChat = base64Images.map(image => {
       return { image: image, role: "user" };
     });
-
-    let currentConversation = conversation;
-    if (message) currentConversation.push({ parts: message, role: "user" });
-    currentConversation = [
-      ...currentConversation,
+    // Add the message to the conversation
+    setConversation([
+      ...conversation,
+      message ? { parts: message, role: "user" } : {},
       ...imagesChat,
       { parts: null, role: "system" },
-    ];
-    // Add the message to the conversation
-    setConversation(currentConversation);
+    ]);
 
     setMessage("");
     setShowEmptyChat(false);
@@ -140,7 +137,7 @@ const Chat = (props: any) => {
       await gemini(geminiHandler, (text: string) => {
         setConversation([
           ...conversation,
-          { parts: message, role: "user" },
+          message ? { parts: message, role: "user" } : {},
           ...imagesChat,
           { parts: text, role: "model" },
         ]);
@@ -217,7 +214,7 @@ const Chat = (props: any) => {
                     className="flex w-full items-center justify-center gap-1 border-b border-black/10 bg-gray-50 p-3 text-gray-500 dark:border-gray-900/50 dark:bg-gray-700 dark:text-gray-300">
                     Model: {selectedModel.name}
                   </div>
-                  {conversation.filter(x => x.type != "command").map((message, index: number) => (
+                  {conversation.filter(x => x.type != "command" && x.role).map((message, index: number) => (
                     <Message
                       key={index}
                       id={index}
