@@ -33,7 +33,7 @@ const Chat = (props: any) => {
 
   useEffect(() => {
     if (typeof startCommand == 'string') {
-      sendMessage().then();
+      sendMessage(null, "command").then();
     }
   }, [])
 
@@ -97,7 +97,7 @@ const Chat = (props: any) => {
     fileInputRef?.current?.click();
   };
 
-  const sendMessage = async (e?: any) => {
+  const sendMessage = async (e?: any, messageType?: string) => {
     e?.preventDefault();
 
     if (!message?.length && !base64Images?.length) {
@@ -115,7 +115,7 @@ const Chat = (props: any) => {
     // Add the message to the conversation
     setConversation([
       ...conversation,
-      message ? { parts: message, role: "user" } : {},
+      message ? { parts: message, role: "user", type: messageType } : {},
       ...imagesChat,
       { parts: null, role: "system" },
     ]);
@@ -127,7 +127,7 @@ const Chat = (props: any) => {
     try {
       const geminiHandler = {
         historyMessages: [...conversation, ...imagesChat],
-        message: { parts: message, role: "user" },
+        message: { parts: message, role: "user", type: messageType },
         model: selectedModel,
         apiKey: apiKey || defaultApiKey,
       } as GeminiHandler;
@@ -137,7 +137,7 @@ const Chat = (props: any) => {
       await gemini(geminiHandler, (text: string) => {
         setConversation([
           ...conversation,
-          message ? { parts: message, role: "user" } : {},
+          message ? { parts: message, role: "user", type: messageType } : {},
           ...imagesChat,
           { parts: text, role: "model" },
         ]);
