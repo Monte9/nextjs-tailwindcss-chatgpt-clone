@@ -193,7 +193,7 @@ const Chat = (props: any) => {
       <div className="sticky top-0 z-10 flex items-center border-b border-white/20 pl-1 pt-1 text-white sm:pl-3 md:hidden bg-cyan-950 ">
         <button
           type="button"
-          className="-ml-0.5 -mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white dark:hover:text-white"
+          className="-ml-0.5 -mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white hover:text-white"
           onClick={toggleComponentVisibility}
         >
           <span className="sr-only">Open sidebar</span>
@@ -206,12 +206,12 @@ const Chat = (props: any) => {
       </div>
       <div className="relative h-full w-full transition-width flex flex-col overflow-hidden items-stretch flex-1">
         <div className="flex-1 overflow-hidden">
-          <div className="react-scroll-to-bottom--css-ikyem-79elbk h-full dark:bg-sky-900">
+          <div className="react-scroll-to-bottom--css-ikyem-79elbk h-full bg-sky-900">
             <div className="react-scroll-to-bottom--css-ikyem-1n7m0yu">
               {!showEmptyChat && conversation.length > 0 ? (
                 <div className="flex flex-col items-center text-sm bg-gray-800">
                   <div
-                    className="flex w-full items-center justify-center gap-1 border-b border-black/10 bg-gray-50 p-3 text-gray-500 dark:border-gray-900/50 dark:bg-gray-700 dark:text-gray-300">
+                    className="flex w-full items-center justify-center gap-1 border-b border-black/10 bg-gray-50 p-3 text-gray-300 border-gray-900/50 bg-gray-700 text-gray-100">
                     Model: {selectedModel.name}
                   </div>
                   {conversation.filter(x => x.type != "command" && x.role).map((message, index: number) => (
@@ -233,7 +233,7 @@ const Chat = (props: any) => {
                   <div className="flex items-center justify-center gap-2">
                     <div className="relative w-full md:w-1/2 lg:w-1/3 xl:w-1/4">
                       <button
-                        className="relative flex w-full cursor-default flex-col rounded-md border border-black/10 bg-white py-2 pl-3 pr-10 text-left focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 dark:border-white/20 dark:bg-cyan-950 sm:text-sm align-center"
+                        className="relative flex w-full cursor-default flex-col rounded-md border border-black/10 bg-transparent py-2 pl-3 pr-10 text-left focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 border-white/20 bg-cyan-950 sm:text-sm align-center"
                         id="headlessui-listbox-button-:r0:"
                         type="button"
                         aria-haspopup="true"
@@ -243,7 +243,7 @@ const Chat = (props: any) => {
                         aria-labelledby="headlessui-listbox-label-:r1: headlessui-listbox-button-:r0:"
                       >
                         <label
-                          className="block text-xs text-gray-700 dark:text-gray-500 text-center"
+                          className="block text-xs text-gray-100 text-gray-400 text-center"
                           id="headlessui-listbox-label-:r1:"
                           data-headlessui-state=""
                         >
@@ -260,12 +260,12 @@ const Chat = (props: any) => {
                       </button>
 
                       {isOpen && (
-                        <div className="absolute z-10 top-14 w-full bg-white dark:bg-gray-800 shadow-md rounded-md">
+                        <div className="absolute z-10 top-14 w-full bg-sky-800 shadow-md rounded-md">
                           <ul className="py-1">
                             {avaliableModels.map((model) => (
                               <li
                                 key={model.id}
-                                className="text-gray-700 dark:text-gray-200 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                                className="text-white cursor-pointer hover:bg-gray-700 bg-sky-800"
                                 onClick={() => {
                                   onModelSelect(model);
                                   close();
@@ -279,16 +279,16 @@ const Chat = (props: any) => {
                       )}
                     </div>
                   </div>
-                  <h1 className="text-2xl drop-shadow-xl shadow-white sm:text-4xl font-semibold text-center text-gray-200 dark:text-white flex gap-2 items-center justify-center h-screen animate-pulse">
+                  <h1 className="text-2xl drop-shadow-xl shadow-white sm:text-4xl font-semibold text-center text-gray-200 text-white flex gap-2 items-center justify-center h-screen animate-pulse">
                     Gemini
                   </h1>
                 </div>
               ) : null}
-              <div className="flex flex-col items-center text-sm dark:bg-gray-800"></div>
+              <div className="flex flex-col items-center text-sm bg-gray-800"></div>
             </div>
           </div>
         </div>
-        <div className="absolute bottom-0 left-0 w-full border-t md:border-t-0 dark:border-white/20 md:border-transparent md:dark:border-transparent md:bg-vert-light-gradient bg-white dark:bg-cyan-950 md:!bg-transparent pt-2">
+        <div className="absolute bottom-0 left-0 w-full border-t md:border-t-0 border-white/20 md:border-transparent md:border-transparent md:bg-vert-light-gradient bg-cyan-950 bg-cyan-950 md:!bg-transparent pt-2">
           <form className="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
             <div className="relative flex flex-col h-full flex-1 items-stretch md:flex-col">
               {errorMessage ? (
@@ -298,7 +298,7 @@ const Chat = (props: any) => {
                   </div>
                 </div>
               ) : null}
-              <div className="flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border border-white/10 bg-white dark:border-white/50 dark:text-white dark:bg-cyan-950 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] dark:shadow-[0_0_15px_rgba(0,0,0,0.10)]">
+              <div className="flex flex-col w-full py-2 flex-grow md:py-3 md:pl-4 relative border border-white/10 bg-cyan-950 border-white/50 text-white bg-cyan-950 rounded-md shadow-[0_0_10px_rgba(0,0,0,0.10)] shadow-[0_0_15px_rgba(0,0,0,0.10)]">
                 <div className='flex justify-end'>
                   <textarea
                     ref={textAreaRef}
@@ -312,7 +312,7 @@ const Chat = (props: any) => {
                     }}
                     // rows={1}
                     placeholder={i18n.SEND_MESSAGE}
-                    className="m-0 w-full resize-none border-0 bg-transparent p-0 pr-7 focus:ring-0 focus-visible:ring-0 dark:bg-transparent pl-2 md:pl-0"
+                    className="m-0 w-full resize-none border-0 bg-transparent p-0 pr-7 focus:ring-0 focus-visible:ring-0 bg-transparent pl-2 md:pl-0"
                     onChange={(e) => setMessage(e.target.value)}
                     onKeyDown={handleKeypress}
                   ></textarea>
@@ -356,7 +356,7 @@ const Chat = (props: any) => {
               </div>
             </div>
           </form>
-          <div className="px-3 pt-2 pb-3 text-center text-xs text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
+          <div className="px-3 pt-2 pb-3 text-center text-xs text-black/50 text-white/50 md:px-4 md:pt-3 md:pb-6">
             <span>
               {i18n.GEMINI_INFORMATION}
             </span>
