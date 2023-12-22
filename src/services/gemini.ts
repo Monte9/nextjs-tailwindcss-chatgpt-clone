@@ -4,7 +4,7 @@ import { GeminiHandler } from "@/types/GeminiHandler";
 import { AIModel } from "@/types/Model";
 import { Content, GenerateContentRequest, GenerativeContentBlob, GoogleGenerativeAI, InlineDataPart, InputContent, Part, TextPart } from "@google/generative-ai";
 
-function fileToGenerativePart(base64: string, mimeType: string) {
+function fileToInlineDataPart(base64: string, mimeType: string) {
     return {
         inlineData: {
             data: base64,
@@ -51,11 +51,11 @@ async function geminiPro(apiKey: string, apiModel: AIModel, historyMessages: Con
 }
 
 async function geminiProVision(apiKey: string, apiModel: AIModel, historyMessages: Conversation[], message: Conversation, callback: any) {
-    const genAI = new GoogleGenerativeAI(apiKey);
+    const genAI = new GoogleGenerativeAI(apiKey, );
     const model = genAI.getGenerativeModel({ model: GEMINI_PRO_VISION_MODEL.id });
     const parts = historyMessages.map((x: any) => {
         if (x.image) {
-            return fileToGenerativePart(x.image.base64, x.image.mimeType) as InlineDataPart;
+            return fileToInlineDataPart(x.image.base64, x.image.mimeType) as InlineDataPart;
         }
         return {
             text: x.parts
