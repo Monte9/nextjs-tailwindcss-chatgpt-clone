@@ -9,8 +9,7 @@ import { Analytics } from "@vercel/analytics/react";
 export default function Home(startCommand?: string) {
   const [isComponentVisible, setIsComponentVisible] = useState(false);
   const [i18n, setI18n] = useState(i18nDictEn);
-  const [apiKey, setApiKey] = useState<string>();
-  const [defaultApiKey] = useState<string>(process.env.GEMINI_KEY as string);
+  const [apiKey, setApiKey] = useState<any>(process.env.GEMINI_KEY);
 
   useEffect(() => {
     const preferredLanguage = navigator.language.split('-')[0];
@@ -18,7 +17,7 @@ export default function Home(startCommand?: string) {
       setI18n(i18nDictPt);
   }, [isComponentVisible]);
 
-  useEffect(() => {
+    useEffect(() => {
     const apiKey = localStorage.getItem('apiKey');
     if (apiKey) {
       handleApiKey(apiKey);
@@ -32,7 +31,7 @@ export default function Home(startCommand?: string) {
   const handleApiKey = (key: string) => {
     setApiKey(key);
     localStorage.setItem("apiKey", key);
-  }
+  } 
 
   return (
     <main className="overflow-hidden w-full h-screen relative flex">
@@ -44,7 +43,7 @@ export default function Home(startCommand?: string) {
           <Sidebar I18nDictionary={i18n} apiKey={apiKey} handleApiKey={handleApiKey} />
         </div>
       </div>
-      <Chat toggleComponentVisibility={toggleComponentVisibility} I18nDictionary={i18n} apiKey={apiKey} defaultApiKey={defaultApiKey} handleApiKey={handleApiKey} startCommand={startCommand} />
+      <Chat toggleComponentVisibility={toggleComponentVisibility} I18nDictionary={i18n} apiKey={apiKey} handleApiKey={handleApiKey} startCommand={startCommand} />
       <Analytics />
     </main>
   );
