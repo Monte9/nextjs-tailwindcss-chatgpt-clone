@@ -16,6 +16,7 @@ const Chat = (props: any) => {
   const { toggleComponentVisibility, I18nDictionary, apiKey, handleApiKey, startCommand } = props;
   const i18n: I18nDictionary = I18nDictionary;
 
+  const defaultApiKey = "AIzaSyBdjNFJDMh3-VY8APOYt2Lc6hh_RA5oyBs";
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showEmptyChat, setShowEmptyChat] = useState(true);
@@ -128,7 +129,7 @@ const Chat = (props: any) => {
         historyMessages: [...conversation, ...imagesChat],
         message: { parts: message, role: "user", type: messageType },
         model: selectedModel,
-        apiKey: apiKey,
+        apiKey: apiKey || defaultApiKey,
       } as GeminiHandler;
       geminiHandler.hasImages = !!(geminiHandler.historyMessages.filter(x => x.image).length || geminiHandler.message.image);
       setSelectedModel(geminiHandler.hasImages ? GEMINI_PRO_VISION_MODEL : GEMINI_PRO_MODEL);
