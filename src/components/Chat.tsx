@@ -13,10 +13,9 @@ import { Conversation } from "@/types/Conversation";
 import { GeminiHandler } from "@/types/GeminiHandler";
 
 const Chat = (props: any) => {
-  const { toggleComponentVisibility, I18nDictionary, apiKey, handleApiKey, startCommand } = props;
+  const { toggleComponentVisibility, I18nDictionary, apiKey, defaultApiKey, startCommand } = props;
   const i18n: I18nDictionary = I18nDictionary;
 
-  const defaultApiKey = "AIzaSyBdjNFJDMh3-VY8APOYt2Lc6hh_RA5oyBs";
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showEmptyChat, setShowEmptyChat] = useState(true);
@@ -123,7 +122,8 @@ const Chat = (props: any) => {
     setMessage("");
     setShowEmptyChat(false);
     setInputImages([]);
-
+    console.log(apiKey, defaultApiKey);
+    debugger
     try {
       const geminiHandler = {
         historyMessages: [...conversation, ...imagesChat],
