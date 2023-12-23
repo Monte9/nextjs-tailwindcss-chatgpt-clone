@@ -13,10 +13,10 @@ import { Conversation } from "@/types/Conversation";
 import { GeminiHandler } from "@/types/GeminiHandler";
 
 const Chat = (props: any) => {
-  const { toggleComponentVisibility, I18nDictionary, apiKey, handleApiKey, startCommand } = props;
+  const { toggleComponentVisibility, I18nDictionary, apiKey, startCommand } = props;
   const i18n: I18nDictionary = I18nDictionary;
 
-  const defaultApiKey = "AIzaSyBdjNFJDMh3-VY8APOYt2Lc6hh_RA5oyBs";
+  const defaultApiKey = process.env.NEXT_PUBLIC_GEMINI_KEY;
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [showEmptyChat, setShowEmptyChat] = useState(true);
@@ -131,6 +131,8 @@ const Chat = (props: any) => {
         model: selectedModel,
         apiKey: apiKey || defaultApiKey,
       } as GeminiHandler;
+
+      debugger;
       geminiHandler.hasImages = !!(geminiHandler.historyMessages.filter(x => x.image).length || geminiHandler.message.image);
       setSelectedModel(geminiHandler.hasImages ? GEMINI_PRO_VISION_MODEL : GEMINI_PRO_MODEL);
 
